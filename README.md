@@ -1,14 +1,12 @@
 # TeamIGS
-Project from Team IGS for Comp 380 Section 20432  
+Project from Team IGS for Comp 380 Section 20432\
+[Jira](https://teamigs.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog)
 
 ## Team Members
 - Russell de Vries (@Bashiho)
 - Finn Bishop (@Arrowsurf)
 - Steven Navarrete (@Steven2700)
 - Andy Martinez (@AndyJM24)
-
-## Workspace
-[Jira](https://teamigs.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog)
 
 ## Project Prompt
 "A software that performs simple E-commerce site for a “abc” sales Company. The functions include searching for
