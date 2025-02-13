@@ -15,7 +15,7 @@ should be sent to the user’s email address."
 
 ## Software
 - Python
-- Djano (Framework)
+- Django (Framework)
 - HTML
 - CSS
 - JavaScript
