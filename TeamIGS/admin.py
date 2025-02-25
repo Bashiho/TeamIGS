@@ -19,4 +19,4 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ["name"] # What items are filtered by
     search_fields = ["name"] # What fields can be searched for
 
-admin.site.register(Item, ItemAdmin)
+admin.site.register(Item, ItemAdmin) # Registers this informatin to the database
