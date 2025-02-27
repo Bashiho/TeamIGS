@@ -12,10 +12,9 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2) # using to test error when creating item
     category = models.CharField(max_length=100)
     
+    # used when looking at objects in database, represents them via their name
     def __str__(self):
-        #might be able to change it to just return name, requires testing and research
-        returnString = self.name + " " + self.description + " " +  self.imageURL + " " +  str(self.price) 
-        return returnString
+        return self.name
     # @admin.display( #can be used to modify admin display
             
     # )
