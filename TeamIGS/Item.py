@@ -9,11 +9,13 @@ class Item(models.Model):
     # find way to include product image
     imageURL = models.CharField(max_length=200)
     # price = models.DecimalField(max_digits=10, decimal_places=2)
-    price = models.CharField(max_length=100) # using to test error when creating item
+    price = models.DecimalField(max_digits=10, decimal_places=2) # using to test error when creating item
     category = models.CharField(max_length=100)
     
     def __str__(self):
-        return self.name, self.description, self.imageURL, self.price
+        #might be able to change it to just return name, requires testing and research
+        returnString = self.name + " " + self.description + " " +  self.imageURL + " " +  str(self.price) 
+        return returnString
     # @admin.display( #can be used to modify admin display
             
     # )
