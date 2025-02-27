@@ -2,6 +2,10 @@
 
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
     
-{% for item in item_list %}
-    <li> {{ item.name item.description item.price item.imageURL item.category }}</li>
-{% endfor %}
+<fieldset>
+    {{ item.name}}<br>
+    {{ item.description }}<br>
+    {{ item.imageURL }}<br>
+    {{ item.price }}<br>
+    {{ item.category }}<br>
+</fieldset>
