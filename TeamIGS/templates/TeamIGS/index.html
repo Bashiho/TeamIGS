@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+
+{% if item_list %}
+    <ul>
+    {% for item in item_list %}
+        <li><a href="{% url 'detail' item.id %}">{{ item.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No items are available.</p>
+{% endif %}

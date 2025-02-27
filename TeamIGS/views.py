@@ -9,7 +9,11 @@ from .Item import Item
 
 # View containing all items available on site, mostly placeholder for now
 class IndexView(generic.ListView):
-    template_name = "teamIGS/index.html" #currently doesn't exist, create later
+    template_name = "TeamIGS/index.html"
+    context_object_name = "item_list"
+
+    def get_queryset(self):
+        return Item.objects.filter().order_by("name")
 
 # View containing detailed item page, mostly placeholder for now
 class DetailView(generic.DetailView):

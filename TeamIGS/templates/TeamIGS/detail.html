@@ -1,0 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+    
+{% for item in item_list %}
+    <li> {{ item.name item.description item.price item.imageURL item.category }}</li>
+{% endfor %}

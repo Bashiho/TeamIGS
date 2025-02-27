@@ -19,6 +19,7 @@ from django.urls import path
 
 from . import views
 
+app_name = "TeamIGS"
 urlpatterns = [
     # eg /admin/
     path("admin/", admin.site.urls),
