@@ -4,12 +4,12 @@ from django.db import models
 from django.contrib import admin
 
 class Item(models.Model):
-    #sets max size for attribute fields for products
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     # find way to include product image
     imageURL = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    # price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.CharField(max_length=100) # using to test error when creating item
     category = models.CharField(max_length=100)
     
     def __str__(self):

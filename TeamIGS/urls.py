@@ -20,8 +20,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    #eg /TeamIGS/
+    # eg /admin/
+    path("admin/", admin.site.urls),
+    # eg /TeamIGS/
     path("", views.IndexView.as_view(), name="index"),
-    #eg /TeamIGS/2/, likely change to involve name of product when going to product page
+    # eg /TeamIGS/2/, likely change to involve name of product when going to product page
     path("<int:pk>/", views.DetailView.as_view(), name="detail"),
 ]
