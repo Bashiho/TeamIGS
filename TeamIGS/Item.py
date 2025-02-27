@@ -1,14 +1,13 @@
 # Handles information of items, such as their price and descriptions, and displaying them to users
-# Might have to rename to models.py for django, unsure
 from django.db import models
 from django.contrib import admin
 
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    # find way to include product image
+    # find way to include product image, might not use URL here
     imageURL = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2) # using to test error when creating item
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=100)
     
     # used when looking at objects in database, represents them via their name

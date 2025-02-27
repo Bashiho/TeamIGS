@@ -7,7 +7,6 @@ from django.views import generic
 from django.utils import timezone
 from .Item import Item
 
-# View containing all items available on site, mostly placeholder for now
 class IndexView(generic.ListView):
     template_name = "TeamIGS/index.html"
     context_object_name = "item_list"
@@ -15,10 +14,9 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Item.objects.filter().order_by("name")
 
-# View containing detailed item page, mostly placeholder for now
 class DetailView(generic.DetailView):
     model = Item
-    template_name = "teamIGS/detail.html" #currently doesn't exist, create later
+    template_name = "teamIGS/detail.html"
 
 # View for cart, placeholder for now
 class CartView(generic.DetailView):
