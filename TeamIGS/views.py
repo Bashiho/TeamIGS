@@ -16,11 +16,11 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Item
-    template_name = "teamIGS/detail.html"
+    template_name = "TeamIGS/detail.html"
 
 # View for cart, placeholder for now
 class CartView(generic.DetailView):
-    template_name = "teamIGS/cart.html" #currently doesn't exist, create later
+    template_name = "TeamIGS/cart.html" #currently doesn't exist, create later
 
 # placeholder method for adding items to cart, might be moved later
 def add_to_cart():
