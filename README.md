@@ -15,11 +15,10 @@ should be sent to the user’s email address."
 
 ## Software
 - Python
-- Django (Framework)
+- Django
 - HTML
 - CSS
 - JavaScript
 
 ## Requirements
-- Apache (Required for Django)
-- mod_wsgi (Required for Django)
+See requirements.txt
