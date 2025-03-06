@@ -1,8 +1,11 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+
+{% comment %} Header with links to other important pages {% endcomment %}
 <a href="{% url 'index' %}">Home</a>
 <a href="{% url 'cart' %}">Cart</a>
+
 <fieldset>
     {{ item.name}}<br>
     {{ item.description }}<br>

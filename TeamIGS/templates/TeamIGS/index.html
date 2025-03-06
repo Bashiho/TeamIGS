@@ -1,6 +1,8 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+
+{% comment %} Header with links to other important pages {% endcomment %}
 <a href="{% url 'cart' %}">Cart</a>
 {% if item_list %}
     <ul>

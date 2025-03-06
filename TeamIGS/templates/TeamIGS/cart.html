@@ -1,6 +1,8 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+
+{% comment %} Header with links to other important pages {% endcomment %}
 <a href="{% url 'index' %}">Home</a>
 
 {% if cart_items %}
@@ -11,5 +13,5 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No items are available.</p>
+    <p>Cart is empty.</p>
 {% endif %}
