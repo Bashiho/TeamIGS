@@ -18,10 +18,10 @@ class DetailView(generic.DetailView):
     model = Item
     template_name = "TeamIGS/detail.html"
 
-# View for cart, placeholder for now
-class CartView(generic.DetailView):
-    template_name = "TeamIGS/cart.html" #currently doesn't exist, create later
+class CartView(generic.ListView):
+    template_name = "TeamIGS/cart.html"
+    context_object_name = "cart_items"
 
-# placeholder method for adding items to cart, might be moved later
-def add_to_cart():
-    pass
+    def get_queryset(self):
+        return Item.objects.filter().order_by("name") #will need to replace Item.objects with Cart.objects eventually
+    

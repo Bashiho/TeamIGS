@@ -1,11 +1,13 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
-<a href="{% url 'cart' %}">Cart</a>
-{% if item_list %}
+<a href="{% url 'index' %}">Home</a>
+
+{% if cart_items %}
     <ul>
-    {% for item in item_list %}
+    {% for item in cart_items %}
         <li><a href="{% url 'detail' item.id %}">{{ item.name }}</a></li>
+        {% comment %} find some way to handle how many of an item are in cart {% endcomment %}
     {% endfor %}
     </ul>
 {% else %}
