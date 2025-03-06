@@ -26,7 +26,6 @@ urlpatterns = [
     # eg /TeamIGS/
     path("", views.IndexView.as_view(), name="index"),
     # eg /TeamIGS/2/ 
-    # Might try to change it to involve name of product when going to product page
     path("<int:pk>/", views.DetailView.as_view(), name="detail"),
     # eg /TeamIGS/cart/
     path("cart/", views.CartView.as_view(), name="cart"),

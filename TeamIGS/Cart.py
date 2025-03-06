@@ -11,4 +11,4 @@ class Cart(models.Model):
 
     # placeholder method to be called when viewing cart
     def viewCart(self):
-        return items_in_cart
+        return Cart.objects.order_by("name")

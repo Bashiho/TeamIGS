@@ -23,5 +23,4 @@ class CartView(generic.ListView):
     context_object_name = "cart_items"
 
     def get_queryset(self):
-        return Item.objects.filter().order_by("name") #will need to replace Item.objects with Cart.objects eventually
-    
+        return Cart.objects.order_by("name") # Placeholder
