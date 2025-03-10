@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 """
 Django settings for TeamIGS project.
 
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q5&%7j3use_h7_oj1!v-ry6$**gc^-2g&+7mc3=exdigg^e%af'
+SECRET_KEY = os.getenv(DJANGOSECRET)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

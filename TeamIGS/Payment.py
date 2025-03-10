@@ -4,6 +4,10 @@ from .User import User
 from .Cart import Cart
 from .Item import Item
 
+# Find way to handle payments
+# this seems like a decent option https://github.com/ianhalpern/python-payment-processor
+# this might also be helpful https://medium.com/@aggarwalapurva89/payment-system-in-python-7c6805363a59 
+
 class Payment():
     # find way to get tax rate based on location of user
     # tax_rate = 
@@ -18,5 +22,6 @@ class Payment():
 
     # placeholder method, implement later
     def takePayment(total):
+        
         return
 
