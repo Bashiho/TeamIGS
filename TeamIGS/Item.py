@@ -10,13 +10,10 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=100)
     
-    # used when looking at objects in database, represents them via their name
+    # Shows Items by name instead of ID when working in DB
     def __str__(self):
         return self.name
 
-    # @admin.display( #can be used to modify admin display
-
-    # )
 
 # Placeholder class, used for data fields of an item, might not be used
 class Product(models.Model):

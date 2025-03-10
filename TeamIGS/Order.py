@@ -1,4 +1,5 @@
 # Handles processing of order information and displaying it to the user
+# Might serve same function as cart, requires more development to be sure
 from django.db import models
 from .Item import Item
 from .User import User

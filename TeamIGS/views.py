@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .Item import Item
+from .Cart import Cart
 
 class IndexView(generic.ListView):
     template_name = "TeamIGS/index.html"
@@ -19,8 +20,9 @@ class DetailView(generic.DetailView):
     template_name = "TeamIGS/detail.html"
 
 class CartView(generic.ListView):
+    model = Cart
     template_name = "TeamIGS/cart.html"
     context_object_name = "cart_items"
 
     def get_queryset(self):
-        return Cart.objects.order_by("name") # Placeholder
+        return Cart.objects.order_by("name") # Might be handled in Cart.py, requires research

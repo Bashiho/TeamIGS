@@ -1,3 +1,4 @@
+# handles Cart objects that contain items for customer orders
 from django.db import models
 from .Item import Item
 from .User import User
@@ -9,6 +10,6 @@ class Cart(models.Model):
     price = models.IntegerField(max_length = 50)
 
 
-    # placeholder method to be called when viewing cart
+    # method to be called when viewing cart
     def viewCart(self):
         return Cart.objects.order_by("name")
