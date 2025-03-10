@@ -9,4 +9,9 @@ class OrderItems():
     userID = User.getID() # gets user's ID
     cart = getCart(userID) # retrieves user's cart
     total = Payment.getTotal(cart) # calls method in Payment to final total including shipping and taxes
-    Payment.TakePayment(total) # Calls TakePayment() in .Payment to handle payment w/ given information
+    Payment.takePayment(total) # Calls TakePayment() in .Payment to handle payment w/ given information
+    placeOrder() # placeholder
+
+
+    def placeOrder():
+        return
