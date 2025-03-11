@@ -12,4 +12,4 @@ class Cart(models.Model):
 
     # method to be called when viewing cart
     def viewCart(self):
-        return Cart.objects.order_by("name")
+        return Cart.objects.order_by("item")

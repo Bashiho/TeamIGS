@@ -25,4 +25,4 @@ class CartView(generic.ListView):
     context_object_name = "cart_items"
 
     def get_queryset(self):
-        return Cart.objects.order_by("name") # Might be handled in Cart.py, requires research
+        return Cart.objects.order_by("item") # Might be handled in Cart.py, requires research
