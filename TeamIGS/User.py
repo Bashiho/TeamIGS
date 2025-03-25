@@ -1,22 +1,23 @@
 # Handles User information and account management
-# Placeholder, find best way to pull information from the database later once database is established
-name = 'accountName'
-password = 'accountPassword'
-email = 'accountEmail'
-phone = 'accountPhone'
-address = 'accountAddress'
-accountID = 'accountID'
+from django.db import models
 
-# This is a placeholder for the User class
-class User:
-    def __init__(self, name, password, email, phone, address, accountID):
-        self.name = name
-        self.password = password
-        self.email = email
-        self.phone = phone
-        self.address = address
-        self.accountID = accountID
+class User(Models.Model):
+    firstName = Models.CharField(max_length=50)
+    lastName = Models.CharField(max_length=50)
+    password = Models.CharField(max_length=50)
+    email = Models.CharField(max_lenth=100)
+    phone = Models.EmailField()
+    accountID = Models.CharField(max_length=50)
 
+    # Saves user data
+    def register(self):
+        self.save()
+
+    # Finds if account with email exists
+    def getUserFromEmail():
+        return User.objects.get(email=email)
+    
+''' Placeholder Stuff, likely to be removed/replaced
     # View Account Page
     def accountPage(self, accountID):
         # Placeholder for account page method
@@ -71,4 +72,4 @@ class User:
     def viewCart(self):
         # Placeholder for view cart method
         pass
-    
+    '''
