@@ -29,4 +29,10 @@ urlpatterns = [
     path("<int:pk>/", views.DetailView.as_view(), name="detail"),
     # eg /TeamIGS/cart/
     path("cart/", views.CartView.as_view(), name="cart"),
+    # Page containing list of categories
+    path("category/", views.CategoryView.as_view(), name="category"),
+    # Page containing items within category
+    # Currently not working, error reads 
+    # "Reverse for 'inCategory' with arguments '('',)' not found. 1 pattern(s) tried: ['category/(?P<name>[^/]+)\\Z']"
+    path("category/<str:name>", views.InCategoryView.as_view, name="inCategory"),
 ]

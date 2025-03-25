@@ -3,14 +3,15 @@
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
 
 {% comment %} Header with links to other important pages {% endcomment %}
+<a href="{% url 'index' %}">Home</a>
 <a href="{% url 'cart' %}">Cart</a>
-<a href="{% url 'category' %}">Categories</a>
-{% if item_list %}
+{% if categories %}
     <ul>
-    {% for item in item_list %}
-        <li><a href="{% url 'detail' item.id %}">{{ item.name }}</a></li>
+    {% for item in categories %}
+        <li><a href="{% url 'inCategory' category.id %}">{{ category.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No items are available.</p>
 {% endif %}
+
