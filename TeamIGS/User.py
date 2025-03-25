@@ -1,22 +1,28 @@
 # Handles User information and account management
 from django.db import models
 
-class User(Models.Model):
-    firstName = Models.CharField(max_length=50)
-    lastName = Models.CharField(max_length=50)
-    password = Models.CharField(max_length=50)
-    email = Models.CharField(max_lenth=100)
-    phone = Models.EmailField()
-    accountID = Models.CharField(max_length=50)
+class User(models.Model):
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
+    phone = models.EmailField()
+    accountID = models.CharField(max_length=50)
 
     # Saves user data
     def register(self):
         self.save()
 
     # Finds if account with email exists
+    @staticmethod
     def getUserFromEmail():
-        return User.objects.get(email=email)
-    
+        try:
+            return User.objects.get(email=email)
+        except:
+            return false
+
+
+
 ''' Placeholder Stuff, likely to be removed/replaced
     # View Account Page
     def accountPage(self, accountID):

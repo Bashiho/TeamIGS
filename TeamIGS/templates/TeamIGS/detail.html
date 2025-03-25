@@ -7,9 +7,10 @@
 <a href="{% url 'cart' %}">Cart</a>
 
 <fieldset>
-    {{ item.name}}<br>
-    {{ item.description }}<br>
-    {{ item.imageURL }}<br>
-    {{ item.price }}<br>
-    {{ item.category }}<br>
+    Name: {{ item.name}}<br>
+    Description: {{ item.description }}<br>
+    {% comment %} Currently not reading from correct directory, fix later {% endcomment %}
+    <img src=item.image alt=item.image><br>
+    Price: {{ item.price }}<br>
+    Category: {{ item.category }}<br>
 </fieldset>
