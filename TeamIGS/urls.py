@@ -33,6 +33,6 @@ urlpatterns = [
     path("category/", views.CategoryView.as_view(), name="category"),
     # Page containing items within category
     # Currently not working, error reads 
-    # "Reverse for 'inCategory' with arguments '('',)' not found. 1 pattern(s) tried: ['category/(?P<name>[^/]+)\\Z']"
-    path("category/<str:name>", views.InCategoryView.as_view, name="inCategory"),
+    # Field 'id' expected a number but got <class 'TeamIGS.Category.Category'>.
+    path("category/<str:name>/", views.InCategoryView.as_view(), name="inCategory"),
 ]

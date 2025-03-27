@@ -7,8 +7,8 @@
 <a href="{% url 'cart' %}">Cart</a>
 {% if categories %}
     <ul>
-    {% for item in categories %}
-        <li><a href="{% url 'inCategory' category.id %}">{{ category.name }}</a></li>
+    {% for category in categories %}
+        <li><a href="{% url 'inCategory' category.name %}">{{ category.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

@@ -1,5 +1,5 @@
 # Not sure which ones will be used, can clean up later
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.db.models import F
 from django.urls import reverse
@@ -37,9 +37,10 @@ class CategoryView(generic.ListView):
         return Category.objects.order_by("name")
     
 class InCategoryView(generic.ListView):
+    model = Item
     template_name = "TeamIGS/inCategory.html"
     context_object_name = "category_items"
 
     def get_queryset(self):
-        return Item.objects.filter(category=Category).order_by("name")
-    
+        itemCategory = self.request.GET.get('category')
+        return Item.objects.filter(category__name=itemCategory).order_by("name")
