@@ -32,7 +32,5 @@ urlpatterns = [
     # Page containing list of categories
     path("category/", views.CategoryView.as_view(), name="category"),
     # Page containing items within category
-    # Currently not working, error reads 
-    # Field 'id' expected a number but got <class 'TeamIGS.Category.Category'>.
     path("category/<str:name>/", views.InCategoryView.as_view(), name="inCategory"),
 ]
