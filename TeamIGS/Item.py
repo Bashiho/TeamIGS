@@ -6,7 +6,7 @@ from .Category import Category
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='templates/uploads/products/', default=1) # Allows admin to upload image for product when creating product
+    image = models.ImageField(upload_to='TeamIGS/ItemPictures', default=1) # Allows admin to upload image for product when creating product
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     
