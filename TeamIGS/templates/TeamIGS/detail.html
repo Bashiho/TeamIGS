@@ -11,7 +11,7 @@
     Name: {{ item.name}}<br>
     Description: {{ item.description }}<br>
     {% comment %} Currently not reading from correct directory, fix later {% endcomment %}
-    <img src=item.image alt=item.image><br>
+    <img src="{{ item.image.url }}" alt="item image"><br>
     Price: {{ item.price }}<br>
     Category: {{ item.category }}<br>
 </fieldset>
