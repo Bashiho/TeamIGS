@@ -1,18 +1,22 @@
-# Handles ordering of items
+# Handles management of items in cart
 from .Item import Item
 from .Cart import Cart
 from .Payment import Payment
 from .User import User
 from .Shipping import Shipping
+from django.db import models
+from django.conf import settings
 
-class OrderItems():
+class OrderItem(models.Model):
     # currency = find appropriate currency and apply
-    userID = User.getID() # gets user's ID
-    cart = getCart(userID) # retrieves user's cart
-    total = Payment.getTotal(cart) # calls method in Payment to final total including shipping and taxes
-    Payment.takePayment(total) # Calls TakePayment() in .Payment to handle payment w/ given information
-    placeOrder() # placeholder
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    ordered = models.BooleanField(default = False)
 
 
-    def placeOrder():
-        return
+    def __str__(self):
+        return f"{self.quantity} of {self.item.name}"
+
+    def getTotalItemPrice(self):
+        return self.quantity * self.item.price
