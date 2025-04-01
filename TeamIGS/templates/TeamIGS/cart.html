@@ -9,8 +9,11 @@
 {% if cart_items %}
     <ul>
     {% for item in cart_items %}
-        <li><a href="{% url 'detail' item.id %}">{{ item.name }} {{ item.price }} </a></li>
+        <li>
+            <a href="{% url 'detail' item.id %}">{{ item.name }} {{ item.price }} </a></li>
         {% comment %} find some way to handle how many of an item are in cart {% endcomment %}
+        <a href="{% url remove_from_cart item.id %}">remove</a>"
+        </li>
     {% endfor %}
     </ul>
 {% else %}

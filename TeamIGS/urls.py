@@ -31,7 +31,7 @@ urlpatterns = [
     path("cart/", views.CartView.as_view(), name="cart"),
     #Category pages moved to low priority
 #     # Page containing list of categories
-#     path("category/", views.CategoryView.as_view(), name="category"),
+     path("category/", views.InCategoryView.as_view(), name="category"),
 #     # Page containing items within category
-#     path("category/<str:name>/", views.InCategoryView.as_view(), name="inCategory"),
+     path("category/<str:name>/", views.InCategoryView.as_view(), name="inCategory"),
 ]

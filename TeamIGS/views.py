@@ -37,13 +37,13 @@ class CartView(generic.ListView):
 #     def get_queryset(self):
 #         return Category.objects.order_by("name")
     
-# class InCategoryView(generic.ListView):
-#     template_name = "TeamIGS/inCategory.html"
-#     context_object_name = "category_items"
+class InCategoryView(generic.ListView):
+    template_name = "TeamIGS/InCategory.html"
+    context_object_name = "category_items"
 
-#     def get_queryset(self):
-#         categoryID = self.request.GET.get('category')
-#         if categoryID:
-#             return Item.objects.filter(category__name=categoryID)
-#         else:  
-#             return
+    def get_queryset(self):
+        categoryID = self.request.GET.get('category')
+        if categoryID:
+            return Item.objects.filter(category__name=categoryID)
+        else:  
+            return
