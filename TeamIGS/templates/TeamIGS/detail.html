@@ -5,7 +5,7 @@
 {% comment %} Header with links to other important pages {% endcomment %}
 <a href="{% url 'index' %}">Home</a>
 <a href="{% url 'cart' %}">Cart</a>
-<a href=" {% url 'category' %}">Categories</a>
+{% comment %} <a href=" {% url 'category' %}">Categories</a> {% endcomment %}
 
 <h1>
     Name: {{ item.name}}<br>
