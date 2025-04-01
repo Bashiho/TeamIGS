@@ -19,6 +19,15 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+    def getAbsoluteURL(self):
+        return reverse("TeamIGS:detail", kwargs={'slug': self.slug})
+    
+    # Requires adding something to urls.py
+    def getAddToCartURL(self):
+        return reverse("TeamIGS:add-to-cart", kwargs={'slug', self.slug})
+
+    def getRemoveFromCartURL(self):
+        return reverse("TeamIGS:remove-from-cart", kwargs={'slug', self.slug})
 
 # # Placeholder class, might not be used
 # class Product(models.Model):
