@@ -4,7 +4,7 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=50)
     # allows for alternate url that includes name of category when category is multiple words, requires implementation
-    slug = models.SlugField(max_length=200, unique=True, default=1)
+    slug = models.SlugField()
 
     class Meta:
         ordering = ('name',)

@@ -20,12 +20,12 @@ class Item(models.Model):
         return self.name
 
 
-# Placeholder class, might not be used
-class Product(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+# # Placeholder class, might not be used
+# class Product(models.Model):
+#     item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.category
+#     def __str__(self):
+#         return self.category
 
 
     
