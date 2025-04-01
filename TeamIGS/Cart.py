@@ -13,3 +13,10 @@ class Cart(models.Model):
     # method to be called when viewing cart
     def viewCart(self):
         return Cart.objects.order_by("item")
+
+    # placeholder
+    def getTotal(self):
+        total = 0
+        for items in Cart:
+            total += item.price
+        return total

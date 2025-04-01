@@ -9,10 +9,12 @@
 {% if cart_items %}
     <ul>
     {% for item in cart_items %}
-        <li><a href="{% url 'detail' item.id %}">{{ item.item }}</a></li>
+        <li><a href="{% url 'detail' item.id %}">{{ item.name }} {{ item.price }} </a></li>
         {% comment %} find some way to handle how many of an item are in cart {% endcomment %}
     {% endfor %}
     </ul>
 {% else %}
     <p>Cart is empty.</p>
 {% endif %}
+
+<h1>Total: {{ Cart.total }}</h1>

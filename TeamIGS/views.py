@@ -29,20 +29,21 @@ class CartView(generic.ListView):
     def get_queryset(self):
         return Cart.objects.order_by("item") # Might be handled in Cart.py, requires research
 
-class CategoryView(generic.ListView):
-    template_name = "TeamIGS/category.html"
-    context_object_name = "categories"
+# Category searching moved to low priority, return to this later
+# class CategoryView(generic.ListView):
+#     template_name = "TeamIGS/category.html"
+#     context_object_name = "categories"
 
-    def get_queryset(self):
-        return Category.objects.order_by("name")
+#     def get_queryset(self):
+#         return Category.objects.order_by("name")
     
-class InCategoryView(generic.ListView):
-    template_name = "TeamIGS/inCategory.html"
-    context_object_name = "category_items"
+# class InCategoryView(generic.ListView):
+#     template_name = "TeamIGS/inCategory.html"
+#     context_object_name = "category_items"
 
-    def get_queryset(self):
-        categoryID = self.request.GET.get('category')
-        if categoryID:
-            return Item.objects.filter(category__name=categoryID)
-        else:  
-            return
+#     def get_queryset(self):
+#         categoryID = self.request.GET.get('category')
+#         if categoryID:
+#             return Item.objects.filter(category__name=categoryID)
+#         else:  
+#             return
