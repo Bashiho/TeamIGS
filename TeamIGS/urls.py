@@ -16,22 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
-from . import views
+from .views import (
+    IndexView,
+    DetailView,
+    CartView,
+    InCategoryView,
+)
 
 app_name = "TeamIGS"
 urlpatterns = [
-    # eg /admin/
     path("admin/", admin.site.urls),
-    # eg /TeamIGS/
-    path("", views.IndexView.as_view(), name="index"),
-    # eg /TeamIGS/2/ 
-    path("<int:pk>/", views.DetailView.as_view(), name="detail"),
-    # eg /TeamIGS/cart/
-    path("cart/", views.CartView.as_view(), name="cart"),
-    #Category pages moved to low priority
-#     # Page containing list of categories
-     path("category/", views.InCategoryView.as_view(), name="category"),
-#     # Page containing items within category
-     path("category/<str:name>/", views.InCategoryView.as_view(), name="inCategory"),
+    path("", IndexView.as_view(), name="index"),
+    path("<int:pk>/", DetailView.as_view(), name="detail"),
+    # path("cart/", CartView.as_view(), name="cart"),
+    path("cart/", CartView.as_view(), name="cart"),
+    # Category pages moved to low priority, might not be properly implemented for a while
+    # Page containing list of categories, not working
+     path("category/", InCategoryView.as_view(), name="category"),
+    # Page containing items within category
+     path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
 ]

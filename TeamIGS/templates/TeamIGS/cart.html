@@ -6,13 +6,15 @@
 <a href="{% url 'index' %}">Home</a>
 {% comment %} <a href=" {% url 'category' %}">Categories</a> {% endcomment %}
 
+{% comment %} Requires implementation of items in cart {% endcomment %}
+
+
 {% if cart_items %}
     <ul>
     {% for item in cart_items %}
         <li>
-            <a href="{% url 'detail' item.id %}">{{ item.name }} {{ item.price }} </a></li>
-        {% comment %} find some way to handle how many of an item are in cart {% endcomment %}
-        <a href="{% url remove_from_cart item.id %}">remove</a>"
+            <a href="{% url 'detail' item.id %}">{{ item.name }} {{ item.price }} </a>
+            {% comment %} <a href="{% url 'remove_from_cart' %}">remove</a>" {% endcomment %}
         </li>
     {% endfor %}
     </ul>
@@ -20,4 +22,6 @@
     <h1>Cart is empty.</h1>
 {% endif %}
 
-<h1>Total: {{ Cart.total }}</h1>
+<h1>Total: {{ Order.total }}</h1>
+
+<a href="{% url 'orderSummary' %}">Order</a>
