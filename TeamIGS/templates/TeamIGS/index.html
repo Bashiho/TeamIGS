@@ -9,7 +9,9 @@
 </head>
 <body class="index-page">
 {% comment %} Header with links to other important pages {% endcomment %}
-<a href="{% url 'cart' %}">Cart</a>
+    <div class="cart-container">
+        <a href="{% url 'cart' %}" class="cart-link">Cart</a>
+    </div>
 {% comment %} <a href="{% url 'category' %}">Categories</a> {% endcomment %}
 {% if item_list %}
     <ul>
