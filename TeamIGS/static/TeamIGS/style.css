@@ -1,7 +1,15 @@
 li a {
     color: aliceblue;
 }
-
+body.index-page {
+    background: black;
+    background-image: url("../images/Dark Background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    margin: 0;
+}
 body {
     background: black;
 }
