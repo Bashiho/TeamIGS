@@ -42,8 +42,10 @@
 </head>
     
 <body class="index-page">
-<!-- Header with links to important pages -->>
-<a href="{% url 'cart' %}">Cart</a>
+{% comment %} Header with links to other important pages {% endcomment %}
+    <div class="cart-container">
+        <a href="{% url 'cart' %}" class="cart-link">Cart</a>
+    </div>
 {% comment %} <a href="{% url 'category' %}">Categories</a> {% endcomment %}
  <!-- list of items on site -->
 {% if item_list %}
