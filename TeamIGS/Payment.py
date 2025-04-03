@@ -1,6 +1,6 @@
 # Handles payments
 from .Shipping import Shipping
-from .User import User
+from .Customer import Customer
 from .Cart import Cart
 from .Item import Item
 

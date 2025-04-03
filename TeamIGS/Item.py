@@ -6,7 +6,7 @@ from .Category import Category
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='TeamIGS/static/ItemPictures', default=1) # Need to fix upload location, html doesn't retrieve images properly
+    image = models.ImageField(null=True, blank=True) # Need to fix upload location, html doesn't retrieve images properly
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     slug = models.SlugField(max_length=200, db_index=True, default=1)

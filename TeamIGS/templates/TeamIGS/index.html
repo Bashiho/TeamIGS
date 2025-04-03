@@ -1,10 +1,46 @@
 {% load static %}
+<!html>
+<head>
+    <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
 
-<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+      
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        } 
+    </script>
 
-{% comment %} Header with links to other important pages {% endcomment %}
+    <script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
+
+    <script type="text/javascript">
+    var user = '{{request.user}}'
+    </script>
+    <script>
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+    </script>
+</head>
+<!-- Header with links to important pages -->>
 <a href="{% url 'cart' %}">Cart</a>
 {% comment %} <a href="{% url 'category' %}">Categories</a> {% endcomment %}
+ <!-- list of items on site -->
 {% if item_list %}
     <ul>
     {% for item in item_list %}
@@ -14,3 +50,26 @@
 {% else %}
     <h1>No items are available.</h1>
 {% endif %}
+
+
+ <!-- A button to open the popup form -->
+<button class="open-button" onclick="openForm()">Make Account or Login</button>
+
+<!-- The form -->
+<div class="form-popup" id="myForm">
+    <form action="/action_page.php" class="form-container">
+        <h1>Login</h1>
+ 
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" required>
+ 
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+ 
+        <button type="submit" class="btn">Login</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        <button type="createAccount" class="btn account" a href="createAccount.html">Create an Account</button>
+    </form>
+</div> 
+
+</html>

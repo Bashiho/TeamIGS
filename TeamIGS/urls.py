@@ -19,9 +19,14 @@ from django.urls import path
 from .views import (
     IndexView,
     DetailView,
-    CartView,
+    cart,
     InCategoryView,
+    loginView,
+    checkout,
+    updateItem,
 )
+from django.conf.urls.static import static 
+from django.conf import settings
 
 app_name = "TeamIGS"
 urlpatterns = [
@@ -29,10 +34,15 @@ urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("<int:pk>/", DetailView.as_view(), name="detail"),
     # path("cart/", CartView.as_view(), name="cart"),
-    path("cart/", CartView.as_view(), name="cart"),
+    path("cart/", cart, name="cart"),
+    path("checkout/", checkout, name="checkout"),
+    path("updateItem/", updateItem, name="updateItem"),
     # Category pages moved to low priority, might not be properly implemented for a while
     # Page containing list of categories, not working
-     path("category/", InCategoryView.as_view(), name="category"),
+    path("category/", InCategoryView.as_view(), name="category"),
     # Page containing items within category
-     path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
-]
+    path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
+    # Currently placeholder, requires login.html to be made
+    path("login/", loginView.as_view(), name="login"),
+] 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
