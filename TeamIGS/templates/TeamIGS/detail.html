@@ -1,17 +1,65 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width=device=width, initial-scale=1.0">
+        <title> {{item.name}} </title>
+        <link rel= "stylesheet" href= "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link rel = "stylesheet" href = "{% static 'TeamIGS/style.css' %}">
 
-<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+    </head>
+    <body>
+        <!--Navbar-->
+        <nav class = "navbar navbar-expand-lg navbar-light bg-light">
+            <div class = "container-fluid">
+                <a class = "navbar-brand" href = "{% url 'index' %}">TeamIGS</a>
+                <button class = "navbar-toggler" type ="button" data-bs-toggle = "collapse" data-bs-target="#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
+                    <span class = "navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id ="navbarNav">
+                        <ul class = "navbar-nav">
+                            <li class ="nav-item">
+                                <a class = "nav-link" href="{% url 'index' %}">Home</a>
+                            </li>
+                            <li class = "nav-item">
+                                <a class ="nav-link" href="{% url 'cart' %}">Cart</a>
+                            </li>
+                            <li class = "nav-item">
+                                <a class = "nav-link" href="{% url 'category' %}">Categories</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+            </div>    
+        </nav>
+<!--Product Descriptions -->
+        <div class ="container mt-5">
+            <div class = "row">
+                <div class = "col-md-6">
+                    <img src = "{{item.image.url}}" alt = "{{item.name}}" class="img-fluid rounded">
+                </div>
+                <div class ="col-md-6">
+                    <h1>{{item.name}}</h1>
+                    <p class = "text-muted">{{ item.category}}</p>
+                    <p>{{ item.description}}</p>
+                    <h3 class = "text-success">${{item.price}}</h3>
+                    <div class = "mt-4">
+                        <button class = "btn btn-primary">Add to cart</button>
+                        <button class = "btn btn-success"> Buy Now</button>
+                    </div>
+        
+                </div>
+            </div>
+        </div>
 
-{% comment %} Header with links to other important pages {% endcomment %}
-<a href="{% url 'index' %}">Home</a>
-<a href="{% url 'cart' %}">Cart</a>
-{% comment %} <a href=" {% url 'category' %}">Categories</a> {% endcomment %}
+        <footer class = "bg-light text-center text-lg-start mt-5">
+            <div class="text-center p-3">
+                © 2023 TeamIGS. All rights reserved.
+                
+            </div>
+        </footer>
+        <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<h1>
-    Name: {{ item.name}}<br>
-    Description: {{ item.description }}<br>
-    {% comment %} Images not working, fix later {% endcomment %}
-    <img src="{{ item.image.url }}" alt="item image"><br>
-    Price: {{ item.price }}<br>
-    Category: {{ item.category }}<br>
-</h1>
+    </body>
+</html>
