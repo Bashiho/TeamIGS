@@ -36,7 +36,7 @@ urlpatterns = [
     # path("cart/", CartView.as_view(), name="cart"),
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
-    path("updateItem/", updateItem, name="updateItem"),
+    path("update_Item/", updateItem, name="update_Item"),
     # Category pages moved to low priority, might not be properly implemented for a while
     # Page containing list of categories, not working
     path("category/", InCategoryView.as_view(), name="category"),

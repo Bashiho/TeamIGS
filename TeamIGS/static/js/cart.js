@@ -1,23 +1,15 @@
-var updateBtns = document.getElementsByClassName('update-cart')
-
-for (i = 0; i < updateBtns.length; i++) {
-	updateBtns[i].addEventListener('click', function(){
-		var itemId = this.dataset.item
-		var action = this.dataset.action
-		console.log('productId:', itemId, 'Action:', action)
-        
-        console.log('USER:', user)
-        if (user == 'AnonymousUser'){
-	        console.log('User is not authenticated')
-			
-        }else{
-            updateUserOrder(itemId, action)
-        }
-
-	})
+function add(itemId, action){
+    console.log('USER:', user)
+    if (user == 'AnonymousUser'){
+        console.log('User not authenticated')
+        addCookieItem(itemId, action)
+    }else{
+        console.log('User authenticated')
+        updateUserOrder(itemId, action)
+    }
 }
 
-function updateUserOrder(itemID, action){
+function updateUserOrder(itemId, action){
     var url = '/update-item/'
     console.log('URL:', url)
     fetch(url,{
@@ -26,7 +18,7 @@ function updateUserOrder(itemID, action){
             'Content-Type': 'application/json',
             'X-CSRFToken': csrftoken,
         },
-        body: JSON.stringify({'itemID': itemID, 'action':action})
+        body: JSON.stringify({'itemId': itemId, 'action':action})
     })
     .then((response) => {
         return response.json()
@@ -34,4 +26,26 @@ function updateUserOrder(itemID, action){
     .then((data) => {
         location.reload()
     });
+}
+
+function addCookieItem(itemId, action){
+    console.log('User not authenticated')
+    if (action == 'add'){
+        if(cart[itemId] == undefined){
+            cart[itemId] = {'quantity':1}
+        }
+        else{
+            cart[itemId]['quantity'] += 1
+        }
+    }
+    else if (action == 'remove'){
+        cart[itemId]['quantity'] -= 1
+
+        if(cart[itemId]['quantity'] <= 0){
+            delete cart[itemId];
+        }
+    }
+    console.log("Cart:", cart)
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    location.reload()
 }
