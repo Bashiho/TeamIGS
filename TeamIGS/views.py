@@ -80,16 +80,16 @@ def cart(request):
 
 def updateItem(request):
 	data = json.loads(request.body)
-	productId = data['productId']
+	itemId = data['itemId']
 	action = data['action']
 	print('Action:', action)
-	print('Product:', productId)
+	print('Product:', itemId)
 
 	customer = request.user.customer
-	product = Product.objects.get(id=productId)
+	item = Product.objects.get(id=itemId)
 	order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
-	orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+	orderItem, created = OrderItem.objects.get_or_create(order=order, product=item)
 
 	if action == 'add':
 		orderItem.quantity = (orderItem.quantity + 1)

@@ -1,10 +1,13 @@
+<!DOCTYPE html>
 {% load static %}
 <head>
     <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
     
     <script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
     
-    <script>
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+
         function getToken(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -21,6 +24,28 @@
             return cookieValue;
         }
         var csrftoken = getToken('csrftoken')
+
+        function getCookie(name){
+            var cookieArray = document.cookie.split(";");
+
+            for(var i = 0; i < cookieArray.length; i++){
+                var cookiePair = cookieArray[i].split("=");
+
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            return null;
+        }
+        var cart = JSON.parse(getCookie('cart'))
+
+        if (cart == undefined){
+            cart = {}
+            console.log('Created Cart', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log("Cart:", cart)
     </script>
 </head>
 
@@ -32,10 +57,8 @@
 <h1>
     Name: {{ item.name}}<br>
     Description: {{ item.description }}<br>
-    {% comment %} Images not working, fix later {% endcomment %}
-    <img src="{{ item.image.url }}" alt="item image"><br>
+    <img class="itemImage" src="{{ item.image.url }}" alt="item image"><br>
     Price: {{ item.price }}<br>
     Category: {{ item.category }}<br>
 </h1>
-
-<button data-item="{{item.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+<button class="btn" onclick="add({{item.id}}, 'add')">Add to Cart</button>

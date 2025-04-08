@@ -93,7 +93,7 @@ h2 {
 
 /* Full-width input fields */
 .form-container input[type=text], .form-container input[type=password] {
-  width: 100%;
+  width: 90%;
   padding: 15px;
   margin: 5px 0 22px 0;
   border: none;
@@ -138,4 +138,9 @@ h2 {
 
 .box-element .chg-quantity{
   width: 1%
+}
+
+/* limits size of images on item page */
+.itemImage {
+  max-width: 400px;
 }
