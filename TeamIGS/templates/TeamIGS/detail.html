@@ -83,23 +83,14 @@
                 </div>
                 <div class ="col-md-6">
                     <h1>{{item.name}}</h1>
-                    <p class = "text-muted">{{ item.category}}</p>
-                    <p>{{ item.description}}</p>
-                    <h3 class = "text-success">${{item.price}}</h3>
+                    <h1 class = "text-muted">{{ item.category}}</h1>
+                    <h1>{{ item.description}}</h1>
+                    <h1 class = "text-success">${{item.price}}</h1>
                     <div class = "mt-4">
-                        <button class = "btn btn-primary">Add to cart</button>
+                        <button class = "btn btn-primary" onclick="add({{item.id}}, 'add')">Add to cart</button>
                         <button class = "btn btn-success"> Buy Now</button>
                     </div>
         
                 </div>
             </div>
-        </div>
-
-<h1>
-    Name: {{ item.name}}<br>
-    Description: {{ item.description }}<br>
-    <img class="itemImage" src="{{ item.image.url }}" alt="item image"><br>
-    Price: {{ item.price }}<br>
-    Category: {{ item.category }}<br>
-</h1>
-<button class="btn" onclick="add({{item.id}}, 'add')">Add to Cart</button>
+        </div>  
