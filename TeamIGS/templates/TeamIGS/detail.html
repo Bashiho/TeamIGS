@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-<!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
     
@@ -87,7 +86,7 @@
                     <h1>{{ item.description}}</h1>
                     <h1 class = "text-success">${{item.price}}</h1>
                     <div class = "mt-4">
-                        <button class = "btn btn-primary" onclick="add({{item.id}}, 'add')">Add to cart</button>
+                        <button class = "btn btn-primary" onclick="changeQuantity({{item.id}}, 'add')">Add to cart</button>
                         <button class = "btn btn-success"> Buy Now</button>
                     </div>
         

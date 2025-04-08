@@ -1,7 +1,53 @@
+<!DOCTYPE html>
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
 
+<script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
+<head>
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+
+        function getCookie(name){
+            var cookieArray = document.cookie.split(";");
+
+            for(var i = 0; i < cookieArray.length; i++){
+                var cookiePair = cookieArray[i].split("=");
+
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            return null;
+        }
+        var cart = JSON.parse(getCookie('cart'))
+
+        if (cart == undefined){
+            cart = {}
+            console.log('Created Cart', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log("Cart:", cart)
+    </script>
+</head>
 {% comment %} Header with links to other important pages {% endcomment %}
 <a href="{% url 'index' %}">Home</a>
 {% comment %} <a href=" {% url 'category' %}">Categories</a> {% endcomment %}
@@ -11,15 +57,12 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="box-element">
-            <a  class="btn btn-outline-dark" href="{% url 'index' %}">&#x2190; Continue Shopping</a>
-            <br>
-            <br>
             <table class="table">
                 <tr>
-                    <th><h5>Items: <strong>{{cart.items}}</strong></h5></th>
-                    <th><h5>Total:<strong>${{cart.price}}</strong></h5></th>
+                    <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
+                    <th><h5>Total:<strong>${{order.get_cart_total}}</strong></h5></th>
                     <th>
-                        {% comment %} <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a> {% endcomment %}
+                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}"><h2>Checkout</h2></a>
                     </th>
                 </tr>
             </table>
@@ -27,29 +70,22 @@
 
 		<br>
 		<div class="box-element">
+            {% for item in items %}
             <div class="cart-row">
-                <div style="flex:2"></div>
-                <div style="flex:2"><strong>Item</strong></div>
-                <div style="flex:1"><strong>Price</strong></div>
-                <div style="flex:1"><strong>Quantity</strong></div>
-                <div style="flex:1"><strong>Total</strong></div>
-            </div>
-            
-            <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{{item.image.url}}"></div>
-                <div style="flex:2"><p>{{item.name}}</p></div>
-                <div style="flex:1"><p>${{item.price}}</p></div>
+                <div style="flex:2"><img class="row-image" src="{{item.item.image.url}}"></div>
+                <div style="flex:2"><p>{{item.item.name}}</p></div>
+                <div style="flex:1"><p>${{item.item.price}}</p></div>
                 <div style="flex:1">
-                    <p class="quantity">{{cart.quantity}}</p>
+                    <p class="quantity">Amount: {{item.quantity}}</p>
                     <div class="quantity">
-                        <img class="chg-quantity" src="{% static  'images/arrow-up.png' %}">
-                
-                        <img class="chg-quantity" src="{% static  'images/arrow-down.png' %}">
+                        <img class="chg-quantity" onclick="changeQuantity({{item.item.id}}, 'add')" src="{% static  'images/arrow-up.png' %}">
+
+                        <img class="chg-quantity" onclick="changeQuantity({{item.item.id}}, 'remove')" src="{% static  'images/arrow-down.png' %}">
                     </div>
                 </div>
-                <!-- find way to calc total cost of single items, that or get rid of this line-->
-                <div style="flex:1"><p>${{item.price}}</p></div>
+                <div style="flex:1"><p>Total: ${{item.get_total}}</p></div>
             </div>
+            {% endfor %}
 	</div>
 </div>
 

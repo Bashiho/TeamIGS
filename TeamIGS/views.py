@@ -66,17 +66,39 @@ def checkout(request):
 	return render(request, 'TeamIGS/checkout.html', context)
 
 def cart(request):
-	if request.user.is_authenticated:
-		customer = request.user.customer
-		order, created = Order.objects.get_or_create(customer=customer, complete=False)
-		items = order.orderitem_set.all()
-	else:
-		#Create empty cart for now for non-logged in user
-		items = []
-		order = {'get_cart_total':0, 'get_cart_items':0}
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        cart = json.loads(request.COOKIES['cart'])
+        print("Cart:", cart)
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+        cartItems = order['get_cart_items']
 
-	context = {'items':items, 'order':order}
-	return render(request, 'TeamIGS/cart.html/', context)
+        for i in cart:
+            cartItems += cart[i]['quantity']
+            item = Item.objects.get(id=i)
+            total = (item.price * cart[i]['quantity'])
+
+            order['get_cart_total'] += total
+            order['get_cart_items'] += cart[i]['quantity']
+
+            item = {
+                'item':{
+                    'id': item.id,
+                    'name': item.name,
+                    'price': item.price,
+                    'image': item.image,
+                },
+                'quantity': cart[i]['quantity'],
+                'get_total':total,
+            }
+            items.append(item)
+
+    context = {'items':items, 'order':order}
+    return render(request, 'TeamIGS/cart.html/', context)
 
 def updateItem(request):
 	data = json.loads(request.body)

@@ -1,4 +1,4 @@
-function add(itemId, action){
+function changeQuantity(itemId, action){
     console.log('USER:', user)
     if (user == 'AnonymousUser'){
         console.log('User not authenticated')
