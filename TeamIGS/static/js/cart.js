@@ -1,12 +1,13 @@
 function changeQuantity(itemId, action){
     console.log('USER:', user)
-    if (user == 'AnonymousUser'){
-        console.log('User not authenticated')
-        addCookieItem(itemId, action)
-    }else{
-        console.log('User authenticated')
-        updateUserOrder(itemId, action)
-    }
+    // Commented out until accounts are implemented to prevent erros
+    // if (user == 'AnonymousUser'){
+    //     console.log('User not authenticated')
+    addCookieItem(itemId, action)
+    // }else{
+    //     console.log('User authenticated')
+    //     updateUserOrder(itemId, action)
+    // }
 }
 
 function updateUserOrder(itemId, action){
