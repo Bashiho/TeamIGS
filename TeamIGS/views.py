@@ -66,36 +66,38 @@ def checkout(request):
 	return render(request, 'TeamIGS/checkout.html', context)
 
 def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-    else:
-        cart = json.loads(request.COOKIES['cart'])
-        print("Cart:", cart)
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0}
-        cartItems = order['get_cart_items']
+    # Removing Temporarily until accounts are implemented
+    # Causes errors when signed in to admin account and adding to/removing from cart
+    # if request.user.is_authenticated:
+    #     customer = request.user.customer
+    #     order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    #     items = order.orderitem_set.all()
+    # else:
+    cart = json.loads(request.COOKIES['cart'])
+    print("Cart:", cart)
+    items = []
+    order = {'get_cart_total':0, 'get_cart_items':0}
+    cartItems = order['get_cart_items']
+    
+    for i in cart:
+        cartItems += cart[i]['quantity']
+        item = Item.objects.get(id=i)
+        total = (item.price * cart[i]['quantity'])
 
-        for i in cart:
-            cartItems += cart[i]['quantity']
-            item = Item.objects.get(id=i)
-            total = (item.price * cart[i]['quantity'])
+        order['get_cart_total'] += total
+        order['get_cart_items'] += cart[i]['quantity']
 
-            order['get_cart_total'] += total
-            order['get_cart_items'] += cart[i]['quantity']
-
-            item = {
-                'item':{
-                    'id': item.id,
-                    'name': item.name,
-                    'price': item.price,
-                    'image': item.image,
-                },
-                'quantity': cart[i]['quantity'],
-                'get_total':total,
-            }
-            items.append(item)
+        item = {
+            'item':{
+                'id': item.id,
+                'name': item.name,
+                'price': item.price,
+                'image': item.image,
+            },
+            'quantity': cart[i]['quantity'],
+            'get_total':total,
+        }
+        items.append(item)
 
     context = {'items':items, 'order':order}
     return render(request, 'TeamIGS/cart.html/', context)
