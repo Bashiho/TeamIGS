@@ -1,7 +1,7 @@
 # handles Cart objects that contain items for customer orders
 from django.db import models
 from .Item import Item
-from .User import User
+from .Customer import Customer
 
 class Cart(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)

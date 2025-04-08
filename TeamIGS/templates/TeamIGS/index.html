@@ -4,15 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+    <title>Index</title><!html>
+        <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+        <script>
+            function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
+          
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            } 
+        </script>
+    
+        <script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
+    
+        <script type="text/javascript">
+        var user = '{{request.user}}'
+        </script>
+        <script>
+            function getToken(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            var csrftoken = getToken('csrftoken')
+        </script>
 </head>
+    
 <body class="index-page">
 {% comment %} Header with links to other important pages {% endcomment %}
     <div class="cart-container">
         <a href="{% url 'cart' %}" class="cart-link">Cart</a>
     </div>
 {% comment %} <a href="{% url 'category' %}">Categories</a> {% endcomment %}
+ <!-- list of items on site -->
 {% if item_list %}
     <ul>
     {% for item in item_list %}
@@ -22,5 +57,25 @@
 {% else %}
     <h1>No items are available.</h1>
 {% endif %}
-</body>
-</html>
+
+
+ <!-- A button to open the popup form -->
+ <button class="open-button" onclick="openForm()">Make Account or Login</button>
+
+ <!-- The form -->
+ <div class="form-popup" id="myForm">
+     <form action="/action_page.php" class="form-container">
+         <h1>Login</h1>
+  
+         <label for="email"><b>Email</b></label>
+         <input type="text" placeholder="Enter Email" name="email" required>
+  
+         <label for="psw"><b>Password</b></label>
+         <input type="password" placeholder="Enter Password" name="psw" required>
+  
+         <button type="submit" class="btn">Login</button>
+         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+         <button type="createAccount" class="btn account" a href="createAccount.html">Create an Account</button>
+     </form>
+ </div> 
+ 

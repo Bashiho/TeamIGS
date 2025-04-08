@@ -9,10 +9,15 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View, ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 from .Item import Item
 from .Order import Order
 from .Category import Category
 from .OrderItem import OrderItem
+from .Customer import Customer
+import json
 
 class IndexView(generic.ListView):
     template_name = "TeamIGS/index.html"
@@ -37,15 +42,66 @@ class DetailView(generic.DetailView):
 
 # Requires more implementation, currently always kicks user back to index but should visit page when
 # user has items in cart
-class CartView(LoginRequiredMixin, View):
-    def get(self, *args, **kwargs):
-        try:
-            order = Order.objects.get(user=self.request.user, ordered=False)
-            context = {'object': order}
-            return render(self.request, 'TeamIGS/cart.html', context)
-        except ObjectDoesNotExist:
-            # messages.error(self.request, "There is no active order")
-            return redirect("/")
+# class CartView(LoginRequiredMixin, View):
+#     def get(self, *args, **kwargs):
+#         try:
+#             order = Order.objects.get(user=self.request.user, ordered=False)
+#             context = {'object': order}
+#             return render(self.request, 'TeamIGS/cart.html', context)
+#         except ObjectDoesNotExist:
+#             # messages.error(self.request, "There is no active order")
+#             return redirect("/")
+
+def checkout(request):
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer=customer, complete=False)
+		items = order.orderitem_set.all()
+	else:
+		#Create empty cart for now for non-logged in user
+		items = []
+		order = {'get_cart_total':0, 'get_cart_items':0}
+
+	context = {'items':items, 'order':order}
+	return render(request, 'TeamIGS/checkout.html', context)
+
+def cart(request):
+	if request.user.is_authenticated:
+		customer = request.user.customer
+		order, created = Order.objects.get_or_create(customer=customer, complete=False)
+		items = order.orderitem_set.all()
+	else:
+		#Create empty cart for now for non-logged in user
+		items = []
+		order = {'get_cart_total':0, 'get_cart_items':0}
+
+	context = {'items':items, 'order':order}
+	return render(request, 'TeamIGS/cart.html/', context)
+
+def updateItem(request):
+	data = json.loads(request.body)
+	productId = data['productId']
+	action = data['action']
+	print('Action:', action)
+	print('Product:', productId)
+
+	customer = request.user.customer
+	product = Product.objects.get(id=productId)
+	order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+	orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+	if action == 'add':
+		orderItem.quantity = (orderItem.quantity + 1)
+	elif action == 'remove':
+		orderItem.quantity = (orderItem.quantity - 1)
+
+	orderItem.save()
+
+	if orderItem.quantity <= 0:
+		orderItem.delete()
+
+	return JsonResponse('Item was added', safe=False)
             
 # Category searching moved to low priority, return to this later
 # class CategoryView(generic.ListView):
@@ -65,3 +121,36 @@ class InCategoryView(generic.ListView):
             return Item.objects.filter(category__name=categoryID)
         else:  
             return
+
+# Hasn't been tested
+# Might want to add email verification in the future, though that might be handled elsewhere
+def createAccount(request):
+    username = request.POST["username"]
+    email = request.POST["email"]
+    password = request.POST["password"]
+    firstName = request.POST["firstname"]
+    lastName = request.POST["lastname"]
+    user = User.objects.create_user(username, email, password)
+    user.first_name = firstName
+    user.last_name = lastName
+    messages.add_message(self.request, "Account Created!")
+    return render(self.request, 'TeamIGS/')
+
+# Directed to this page when attempting to sign in
+# Verifies account and sends to home or returns error and sends back to login page
+class loginView(generic.View):
+    template_name = "TeamIGS/login.html"
+
+    def loginView(request):
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username, password)
+        if user is not None:
+            login(request, user)
+            # Can make success page for login, otherwise this works
+            messages.add_message(self.request, "Successful login")
+            return render(self.request, 'TeamIGS/index.html')
+        else:
+            # Make failure page
+            messages.error(self.request, 'Failed to login')
+            return render(self.request, 'TeamIGS/login.html')

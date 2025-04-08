@@ -2,31 +2,28 @@
 # Might serve same function as cart, requires more development to be sure
 from django.db import models
 from .Item import Item
-from .User import User
-from .OrderItem import OrderItem
+from .Customer import Customer
 import datetime
 from django.conf import settings
 
+
 class Order(models.Model):
-    #create fields for an order in db
-    items = models.ManyToManyField(OrderItem)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date = models.DateTimeField()
-    ordered = models.BooleanField(default=False)
-    status = models.BooleanField(default=False)
+	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+	date_ordered = models.DateTimeField(auto_now_add=True)
+	complete = models.BooleanField(default=False)
+	transaction_id = models.CharField(max_length=100, null=True)
 
-    #method to place order, saves info to db as order
-    def __str__(self):
-        return self.user.username
+	def __str__(self):
+		return str(self.id)
 
-    def getTotal(self):
-        total = 0
-        for order_item in self.items.all():
-            total += order_item.getTotalItemPrice()
-        return total
+	@property
+	def get_cart_total(self):
+		orderitems = self.orderitem_set.all()
+		total = sum([item.get_total for item in orderitems])
+		return total 
 
-    # might be removed later or placed elsewhere, currently placeholder
-    # method to retrieve information about all orders from a given user, ordered by date
-    @staticmethod
-    def get_orders_from_customer(customer_id):
-        return Order.objects.filter(customer=customer_id).order_by('-date')
+	@property
+	def get_cart_items(self):
+		orderitems = self.orderitem_set.all()
+		total = sum([item.quantity for item in orderitems])
+		return total
