@@ -86,11 +86,11 @@ http://127.0.0.1:8000\
 Navigating to this page will lead you to an empty home page. To add items, navigate to\
 http://127.0.0.1:8000/admin\
 From here, sign into the admin account you created earlier.\
-Then, create a category for objects to be placed into. This is done by clicking the button that reads "+Add" next to "Categories".
-<!-- ![Add Categories](http://link to image) -->
+Then, create a category for objects to be placed into. This is done by clicking the button that reads "+Add" next to "Categories".\
+![Add Categories](https://github.com/Bashiho/TeamIGS/blob/Updated-ReadMe/Resources/categories%20readme.png)\
 From here, simply fill out the fields with the desired information.\
-Then, we can create items. This is done by clicking the "+Add" button next to "Items".
-<!-- ![Add Items](http://link to image) -->
+Then, we can create items. This is done by clicking the "+Add" button next to "Items".\
+![Add Items](https://github.com/Bashiho/TeamIGS/blob/Updated-ReadMe/Resources/items%20readme.png)\
 From here, fill out the fields with the information that you desire. The only section of note is images, which you can upload directly from your computer. They will be stored locally alongside the project files in /static/images.\
 These items should automatically appear on the home page of the website as they are added.\
 
