@@ -1,14 +1,15 @@
 li a {
     color: aliceblue;
 }
-body.index-page {
+body {
     background: black;
     background-image: url("../images/Dark Background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-    min-height: 100vh;
-    margin: 0;
+    background-position: center; /* centers image*/
+    min-height: 100vh; 
+    margin: 0; /* avoids gaps */
+    color: aliceblue
 }
 .cart-link {
     display: inline-block; /* Makes the link behave like a button */
@@ -46,9 +47,6 @@ body.index-page {
 }
 .cart-link:visited {
     color:rgb(137, 5, 203);
-}
-body {
-    background: black;
 }
 
 a {
