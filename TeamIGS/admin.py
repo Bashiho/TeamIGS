@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .Item import Item
-from .Category import Category
-from .Customer import Customer
+from .models import Category, Customer, Item
 
 # Allows for editing product information when creating page for a product
 # class ItemInLine(admin.TabularInline):
