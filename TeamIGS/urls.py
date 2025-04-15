@@ -25,6 +25,8 @@ from .views import (
     checkout,
     updateItem,
 )
+from . import views
+
 from django.conf.urls.static import static 
 from django.conf import settings
 
@@ -44,5 +46,7 @@ urlpatterns = [
     path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
     # Currently placeholder, requires login.html to be made
     path("login/", loginView.as_view(), name="login"),
+    # Css testing page:
+    path("csstest/", views.csstest)
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

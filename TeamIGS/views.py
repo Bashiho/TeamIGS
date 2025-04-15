@@ -19,6 +19,9 @@ from .OrderItem import OrderItem
 from .Customer import Customer
 import json
 
+def csstest(request):
+     return render(request, 'TeamIGS/bootstrapTemplates/index.html')
+
 class IndexView(generic.ListView):
     template_name = "TeamIGS/index.html"
     context_object_name = "item_list"
