@@ -1,29 +1,31 @@
 li a {
     color: aliceblue;
 }
-body.index-page {
+body {
     background: black;
     background-image: url("../images/Dark Background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-    min-height: 100vh;
-    margin: 0;
+    background-position: center; /* centers image*/
+    min-height: 100vh; 
+    margin: 0; /* avoids gaps */
+    color: aliceblue
 }
 .cart-link {
     display: inline-block; /* Makes the link behave like a button */
-    padding: 10px 20px; /* Adds padding inside the button */
-    font-size: 18px; /* Sets the font size */
-    font-weight: bold; /* Makes the text bold */
-    color: aliceblue; /* Text color */
-    background-color: #333; /* Button background color */
+    padding: 5px; /* Adds padding inside the button */
+    background-color: transparent; /* Button background color */
     border: 2px solid aliceblue; /* Adds a border */
     border-radius: 5px; /* Rounds the corners */
     text-decoration: none; /* Removes the underline */
     text-align: center; /* Centers the text */
     transition: transform 0.2s, box-shadow 0.2s; /* Smooth animation for hover effects */
     cursor: pointer; /* Changes the cursor to a pointer */
-}
+    overflow: hidden; /* image does not overflow button */
+    position: relative; /* proper image positioning */
+    width: 50px; /* Button width */
+    height: 50px; /* Button height */
+  }
 .cart-link:hover {
     transform: scale(1.1); /* Slightly enlarges the button */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds a shadow for the "pop-out" effect */
@@ -34,11 +36,17 @@ body.index-page {
     transform: scale(0.95);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+.cart-icon {
+    width: 100%; /* icon width */
+    height: 100%; /* icon height */
+    display: block; /* image treated as a block*/
+    object-fit: contain; /* PNG scales proportionally*/
+    position: absolute; /* Image is contained in button */
+    top: 0;
+    left: 0;
+}
 .cart-link:visited {
     color:rgb(137, 5, 203);
-}
-body {
-    background: black;
 }
 
 a {
