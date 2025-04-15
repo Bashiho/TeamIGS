@@ -1,9 +1,8 @@
-# Not sure which ones will be used, can clean up later
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import generic
 from django.utils import timezone
 from django.views.generic import View, ListView, DetailView
-# not needed until accounts are implemented
+# Needed for account implementation, not working on yet
 # from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login
@@ -32,12 +31,6 @@ class DetailView(generic.DetailView):
     template_name = "TeamIGS/detail.html"
 
 def cart(request):
-    # Commented out until accounts are implemented to prevent bugs
-    # if request.user.is_authenticated:
-    #     customer = request.user.customer
-    #     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    #     items = order.orderitem_set.all()
-    # else:
     cartData = cartFromCookie(request)
     cartItems = cartData['cartItems']
     order = cartData['order']
@@ -73,12 +66,6 @@ def updateItem(request):
 	return JsonResponse('Item was added', safe=False)
 
 def checkout(request):
-    # Commented out until accounts are implemented to prevent bugs
-    # if request.user.is_authenticated:
-    #     customer = request.user.customer
-    #     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    #     items = order.orderitem_set.all()
-    # else:
     cartData = cartFromCookie(request)
     cartItems = cartData['cartItems']
     order = cartData['order']
@@ -88,6 +75,7 @@ def checkout(request):
     return render(request, 'TeamIGS/checkout.html', context)
 
 def processOrder(request):
+    # Potentially set up a process to email the user with information about the order
     # send_mail(
     #     "TeamIGS Order",
     #     "Order Confirmation from TeamIGS" + items,
@@ -96,9 +84,6 @@ def processOrder(request):
     #     fail_silently= False
     # )
     return render(request, 'TeamIGS/processOrder.html')
-
-    # Can implement shipping information later
-
 
 
 '''        
@@ -121,36 +106,4 @@ class InCategoryView(generic.ListView):
         else:  
             return
 
-# Hasn't been tested
-# Might want to add email verification in the future, though that might be handled elsewhere
-def createAccount(request):
-    username = request.POST["username"]
-    email = request.POST["email"]
-    password = request.POST["password"]
-    firstName = request.POST["firstname"]
-    lastName = request.POST["lastname"]
-    user = User.objects.create_user(username, email, password)
-    user.first_name = firstName
-    user.last_name = lastName
-    messages.add_message(self.request, "Account Created!")
-    return render(self.request, 'TeamIGS/')
-
-# Directed to this page when attempting to sign in
-# Verifies account and sends to home or returns error and sends back to login page
-class loginView(generic.View):
-    template_name = "TeamIGS/login.html"
-
-    def loginView(request):
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username, password)
-        if user is not None:
-            login(request, user)
-            # Can make success page for login, otherwise this works
-            messages.add_message(self.request, "Successful login")
-            return render(self.request, 'TeamIGS/index.html')
-        else:
-            # Make failure page
-            messages.error(self.request, 'Failed to login')
-            return render(self.request, 'TeamIGS/login.html')
 '''

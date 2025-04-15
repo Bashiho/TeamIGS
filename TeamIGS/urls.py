@@ -31,10 +31,8 @@ from django.conf import settings
 app_name = "TeamIGS"
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("", IndexView.as_view(), name="index"),
     path("", index, name="index"),
     path("<int:pk>/", DetailView.as_view(), name="detail"),
-    # path("cart/", CartView.as_view(), name="cart"),
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
@@ -45,7 +43,5 @@ urlpatterns = [
     # path("category/", InCategoryView.as_view(), name="category"),
     # Page containing items within category
     # path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
-    # Currently placeholder, requires login.html to be made
-    # path("login/", loginView.as_view(), name="login"),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

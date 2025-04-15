@@ -5,12 +5,9 @@ from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    # allows for alternate url that includes name of category when category is multiple words, requires implementation
-    slug = models.SlugField()
 
     class Meta:
         ordering = ('name',)
-
 
     # returns all categories
     @staticmethod
@@ -33,23 +30,20 @@ class Customer(models.Model):
 class Item(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
-    image = models.ImageField(null=True, blank=True) # Need to fix upload location, html doesn't retrieve images properly
+    image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     slug = models.SlugField(max_length=200, db_index=True, default=1)
 
     class Meta:
         ordering = ('name',)
-        # index_together = (('id', 'slug'),) seems to cause errors, not sure why
     
-    # Shows Items by name instead of ID when working in DB
     def __str__(self):
         return self.name
 
     def getAbsoluteURL(self):
         return reverse("TeamIGS:detail", kwargs={'slug': self.slug})
     
-    # Requires adding something to urls.py
     def getAddToCartURL(self):
         return reverse("TeamIGS:add-to-cart", kwargs={'slug', self.slug})
 
@@ -80,7 +74,6 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    # currency = find appropriate currency and apply
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True)
