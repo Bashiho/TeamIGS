@@ -6,9 +6,9 @@
 <a href="{% url 'index' %}">Home</a>
 <a href="{% url 'cart' %}">Cart</a>
 <a href="{% url 'category' %}">Categories</a>
-{% if category_items %}
+{% if categoryItems %}
     <ul>
-    {% for item in category_items %}
+    {% for item in categoryItems %}
         <li><a href="{% url 'detail' item.id %}">{{ item.name }}</a></li>
     {% endfor %}
     </ul>

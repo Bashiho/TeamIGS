@@ -17,13 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import (
-    # IndexView,
     DetailView,
     index,
     cart,
     checkout,
     updateItem,
     processOrder,
+    category,
+    # InCategoryView,
+    inCategory,
 )
 from django.conf.urls.static import static 
 from django.conf import settings
@@ -36,12 +38,13 @@ urlpatterns = [
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
-    path("processOrder/", processOrder, name="processOrder")
+    path("processOrder/", processOrder, name="processOrder"),
     
     # Not implemented yet
     # Page containing list of categories, not working
-    # path("category/", InCategoryView.as_view(), name="category"),
+    path("category/", category, name="category"),
     # Page containing items within category
+    path("category/<str:name>/", inCategory, name="inCategory")
     # path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

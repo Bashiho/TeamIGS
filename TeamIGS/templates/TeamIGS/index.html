@@ -27,7 +27,6 @@
                     var cookies = document.cookie.split(';');
                     for (var i = 0; i < cookies.length; i++) {
                         var cookie = cookies[i].trim();
-                        // Does this cookie string begin with the name we want?
                         if (cookie.substring(0, name.length + 1) === (name + '=')) {
                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                             break;
@@ -69,7 +68,7 @@
             <img src="{% static 'images/cart-icon.png' %}" alt="Cart" class="cart-icon">
         </a>
     </div>
-{% comment %} <a href="{% url 'category' %}">Categories</a> {% endcomment %}
+<a href="{% url 'category' %}">Categories</a>
  <!-- list of items on site -->
 {% if items %}
     <ul>

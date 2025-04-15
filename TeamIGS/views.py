@@ -13,14 +13,6 @@ import json
 import datetime
 from django.core.mail import send_mail
 
-# Old implementation
-class IndexView(generic.ListView):
-    template_name = "TeamIGS/index.html"
-    context_object_name = "item_list"
-   
-    def get_queryset(self):
-        return Item.objects.filter().order_by("name")
-
 def index(request):
     items = Item.objects.order_by("name")
     context={'items':items}
@@ -85,25 +77,25 @@ def processOrder(request):
     # )
     return render(request, 'TeamIGS/processOrder.html')
 
+def category(request):
+    categories = Category.objects.order_by("name")
+    context = {'categories':categories}
+    return render(request, 'TeamIGS/category.html', context)
 
-'''        
-# Category searching moved to low priority, return to this later
-class CategoryView(generic.ListView):
-    template_name = "TeamIGS/category.html"
-    context_object_name = "categories"
+def inCategory(request):
+    data = json.loads(request.body)
+    name = data['name']
+    categoryItems = Item.objects.filter(category__name=category['name'])
+    context = {'categoryItems':categoryItems}   
+    return render(request, 'TeamIGS/inCategory.html', context)
 
-    def get_queryset(self):
-        return Category.objects.order_by("name")
+# class InCategoryView(generic.ListView):
+#     template_name = "TeamIGS/inCategory.html"
+#     context_object_name = "category_items"
 
-class InCategoryView(generic.ListView):
-    template_name = "TeamIGS/InCategory.html"
-    context_object_name = "category_items"
-
-    def get_queryset(self):
-        categoryID = self.request.GET.get('category')
-        if categoryID:
-            return Item.objects.filter(category__name=categoryID)
-        else:  
-            return
-
-'''
+#     def get_queryset(self):
+#         category = self.request.GET.get('category')
+#         if name:
+#             return Item.objects.filter(category__name=category['name'])
+#         else:  
+#             return
