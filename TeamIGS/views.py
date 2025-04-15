@@ -88,49 +88,14 @@ def checkout(request):
     return render(request, 'TeamIGS/checkout.html', context)
 
 def processOrder(request):
-    orderID = datetime.datetime.now().timestamp()
-    data = json.loads(request.body)
-    # Can add accounts later, only implementing guest checkout for now
-
-    print('COOKIES:', request.COOKIES)
-    name = data['form']['name']
-    email = data['form']['email']
-    
-    cookieData = cartFromCookie(request)
-    items = cookieData['items']
-
-    customer = Customer.objects.get_or_create(
-        email = email
-    )
-    customer.name = name
-    customer.save()
-    
-
-    order = Order.objects.create(
-        customer = customer,
-        complete = False,
-    )
-
-    for item in items:
-        newItem = Items.objects.get(id=item['id'])
-        orderItem = OrderItem.objects.create(
-            item = newItem,
-            order = order,
-            quantity = item['quantity']
-        )
-
-    total = float(data['form']['total'])
-    order.transaction_id = orderID
-    order.save()
-
-    send_mail(
-        "TeamIGS Order",
-        "Order Confirmation from TeamIGS" + items,
-        "TeamIGS@business.net",
-        email,
-        fail_silently= False
-    )
-    return JsonResponse('Order submitted!')
+    # send_mail(
+    #     "TeamIGS Order",
+    #     "Order Confirmation from TeamIGS" + items,
+    #     "TeamIGS@business.net",
+    #     email,
+    #     fail_silently= False
+    # )
+    return render(request, 'TeamIGS/processOrder.html')
 
     # Can implement shipping information later
 

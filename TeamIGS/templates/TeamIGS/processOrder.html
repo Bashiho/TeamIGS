@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'TeamIGS/style.css' %}">
+<script type="text/javascript">
+        cart = {}
+		document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+</script>
+<meta http-equiv="refresh" content="3; {% url 'index' %}">
+
+</head>
+<body>
+<h3>Order Complete!</h3>
+<h1>This page will automatically redirect back to the home page. 
+    If this does not happen within 5 seconds, click <a href="{% url 'index'%}">here</a></h1>
+</body>
