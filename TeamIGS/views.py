@@ -14,6 +14,9 @@ import datetime
 from django.core.mail import send_mail
 
 # Old implementation
+def csstest(request):
+     return render(request, 'TeamIGS/bootstrapTemplates/bs5index.html')
+
 class IndexView(generic.ListView):
     template_name = "TeamIGS/index.html"
     context_object_name = "item_list"
