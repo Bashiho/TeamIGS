@@ -7,45 +7,9 @@
     
     <script type="text/javascript">
         var user = '{{request.user}}'
-
-        function getToken(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        var csrftoken = getToken('csrftoken')
-
-        function getCookie(name){
-            var cookieArray = document.cookie.split(";");
-
-            for(var i = 0; i < cookieArray.length; i++){
-                var cookiePair = cookieArray[i].split("=");
-
-                if(name == cookiePair[0].trim()) {
-                    return decodeURIComponent(cookiePair[1]);
-                }
-            }
-
-            return null;
-        }
-        var cart = JSON.parse(getCookie('cart'))
-
-        if (cart == undefined){
-            cart = {}
-            console.log('Created Cart', cart)
-            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
-        }
-        console.log("Cart:", cart)
+        getToken(name)
+        getCookie(name)
+        var cart = getCart()
     </script>
 </head>
 
@@ -54,10 +18,6 @@
         <!--Navbar-->
         <nav class = "navbar navbar-expand-lg navbar-light bg-light">
             <div class = "container-fluid">
-                <a class = "navbar-brand" href = "{% url 'index' %}">TeamIGS</a>
-                <button class = "navbar-toggler" type ="button" data-bs-toggle = "collapse" data-bs-target="#navbarNav" aria-controls = "navbarNav" aria-expanded = "false" aria-label = "Toggle navigation">
-                    <span class = "navbar-toggler-icon"></span>
-                    </button>
                     <div class="collapse navbar-collapse" id ="navbarNav">
                         <ul class = "navbar-nav">
                             <li class ="nav-item">
@@ -87,7 +47,6 @@
                     <h1 class = "text-success">${{item.price}}</h1>
                     <div class = "mt-4">
                         <button class = "btn btn-primary" onclick="changeQuantity({{item.id}}, 'add')">Add to cart</button>
-                        <button class = "btn btn-success"> Buy Now</button>
                     </div>
         
                 </div>

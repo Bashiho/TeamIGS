@@ -37,11 +37,5 @@ urlpatterns = [
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
     path("processOrder/", processOrder, name="processOrder")
-    
-    # Not implemented yet
-    # Page containing list of categories, not working
-    # path("category/", InCategoryView.as_view(), name="category"),
-    # Page containing items within category
-    # path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

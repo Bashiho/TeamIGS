@@ -13,14 +13,6 @@ import json
 import datetime
 from django.core.mail import send_mail
 
-# Old implementation
-class IndexView(generic.ListView):
-    template_name = "TeamIGS/index.html"
-    context_object_name = "item_list"
-   
-    def get_queryset(self):
-        return Item.objects.filter().order_by("name")
-
 def index(request):
     items = Item.objects.order_by("name")
     context={'items':items}
@@ -32,20 +24,16 @@ class DetailView(generic.DetailView):
 
 def cart(request):
     cartData = cartFromCookie(request)
-    cartItems = cartData['cartItems']
     order = cartData['order']
     items = cartData['items']
-
     
-    context = {'items':items, 'order':order, 'cartItems':cartItems}
+    context = {'items':items, 'order':order}
     return render(request, 'TeamIGS/cart.html', context)
         
 def updateItem(request):
 	data = json.loads(request.body)
 	itemId = data['itemId']
 	action = data['action']
-	print('Action:', action)
-	print('Item:', itemId)
 
 	customer = request.user.customer
 	item = Item.objects.get(id=itemId)
@@ -84,26 +72,3 @@ def processOrder(request):
     #     fail_silently= False
     # )
     return render(request, 'TeamIGS/processOrder.html')
-
-
-'''        
-# Category searching moved to low priority, return to this later
-class CategoryView(generic.ListView):
-    template_name = "TeamIGS/category.html"
-    context_object_name = "categories"
-
-    def get_queryset(self):
-        return Category.objects.order_by("name")
-
-class InCategoryView(generic.ListView):
-    template_name = "TeamIGS/InCategory.html"
-    context_object_name = "category_items"
-
-    def get_queryset(self):
-        categoryID = self.request.GET.get('category')
-        if categoryID:
-            return Item.objects.filter(category__name=categoryID)
-        else:  
-            return
-
-'''

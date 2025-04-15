@@ -51,3 +51,44 @@ function addCookieItem(itemId, action){
     document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
     location.reload()
 }
+
+function getToken(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getToken('csrftoken')
+
+function getCookie(name){
+    var cookieArray = document.cookie.split(";");
+
+    for(var i = 0; i < cookieArray.length; i++){
+        var cookiePair = cookieArray[i].split("=");
+
+        if(name == cookiePair[0].trim()) {
+            return decodeURIComponent(cookiePair[1]);
+        }
+    }
+
+    return null;
+}
+
+function getCart(){
+    var cart = JSON.parse(getCookie('cart'))
+
+    if (cart == undefined){
+        cart = {}
+        console.log('Created Cart', cart)
+        document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    }
+    return cart
+}

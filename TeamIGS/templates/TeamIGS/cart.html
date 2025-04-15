@@ -3,10 +3,15 @@
 <head>
 <link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
 <script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
+<script type="text/javascript">
+    var user = '{{request.user}}'
+    getToken(name)
+    getCookie(name)
+    var cart = getCart()
+    </script>
 </head>
-{% comment %} Header with links to other important pages {% endcomment %}
+<!-- Header with links to other important pages -->
 <a href="{% url 'index' %}">Home</a>
-{% comment %} <a href=" {% url 'category' %}">Categories</a> {% endcomment %}
 
 <div class="row">
 	<div class="col-lg-12">
@@ -16,7 +21,7 @@
                     <th><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
                     <th><h5>Total:<strong>${{order.get_cart_total}}</strong></h5></th>
                     <th>
-                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}"><h2>Checkout</h2></a>
+                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}"><h1>Checkout</h1></a>
                     </th>
                 </tr>
             </table>
@@ -39,6 +44,7 @@
                 </div>
                 <div style="flex:1"><p>Total: ${{item.get_total}}</p></div>
             </div>
+            <hr>
             {% endfor %}
 	</div>
 </div>

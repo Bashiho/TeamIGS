@@ -18,6 +18,7 @@
 			<div class="box-element" id="form-wrapper">
 				<form id="checkout-form" class="checkout-form">
 					<div id="user-info">
+						<p>Personal Information</p>
 						<div class="form-field">
 							<input required class="form-control" type="text" name="name" placeholder="Name">
 						</div>
@@ -51,20 +52,15 @@
 				</form>
 
 				<br>
-				<div class="box-element hidden" id="payment-info">
-					<small>Payment Options</small>
-				</div>
 			</div>
 
 		</div>
 
 		<div class="col-log-6">
-			<div class="box-element">
-				<a class="btn" href={% url 'cart' %}> Back To Cart </a>
+				<h1><a href={% url 'cart' %}> Back To Cart </a></h1>
 				<hr>
 				<h3>Order Summary</h3>
 				<hr>
-			</div>
 			{% for item in items %}
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{item.item.image.url}}"></div>
