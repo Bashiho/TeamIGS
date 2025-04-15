@@ -145,3 +145,9 @@ h2 {
 .itemImage {
   max-width: 400px;
 }
+
+
+.checkout-form {
+  background-color: black;
+  color: aliceblue;
+}

@@ -1,16 +1,154 @@
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="{% static 'TeamIGS/style.css' %}">
+<script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
+
+</head>
+<body>
+	<script>
+		var user = '{{request.user}}'
+
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken')
+
+    	function getCookie(name){
+            var cookieArray = document.cookie.split(";");
+
+            for(var i = 0; i < cookieArray.length; i++){
+                var cookiePair = cookieArray[i].split("=");
+
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            return null;
+        }
+        var cart = JSON.parse(getCookie('cart'))
+
+        if (cart == undefined){
+            cart = {}
+            console.log('Created Cart', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log("Cart:", cart)
+
+		function submitFormData{
+		var formData = {
+			'name':form.name.value,
+			'email':form.email.value,
+			'total':total,
+		} 
+		console.log('User Information:', formData)
+
+		var url = "/processOrder/"
+		fetch(url, {
+			method:'POST',
+			headers: {
+				'Content-Type':'application/json',
+				'X-CSRFtoken':csrftoken,
+			},
+			body:JSON.stringify({'form':formData}),
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			console.log(data);
+			alert('Order Completed');
+
+			cart = {}
+			document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+			window.location.href = "{% url 'index' %}"
+		})
+	}
+	</script>
+
+
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="box-element" id="form-wrapper">
+				<form id="checkout-form" class="checkout-form">
+					<div id="user-info">
+						<div class="form-field">
+							<input required class="form-control" type="text" name="name" placeholder="Name">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="email" placeholder="Email">
+						</div>
+					</div>
 
+					<div id="shipping-info">
+						<hr>
+						<p>Shipping Information</p>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="address" placeholder="Address">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="city" placeholder="City">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="state" placeholder="State">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="zipcode" placeholder="Zip Code">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="country" placeholder="Country">
+						</div>
+					</div>
+
+					<hr>
+					<a href="{% url 'processOrder' %}">Confirm</a>
+					{% comment %} <input id="checkout-form-button" class="btn btn-success btn-block" type="submit" value="Continue"> {% endcomment %}
+				</form>
+
+				<br>
+				<div class="box-element hidden" id="payment-info">
+					<small>Payment Options</small>
+				</div>
 			</div>
 
 		</div>
 
 		<div class="col-log-6">
 			<div class="box-element">
-
+				<a class="btn" href={% url 'cart' %}> Back To Cart </a>
+				<hr>
+				<h3>Order Summary</h3>
+				<hr>
 			</div>
+			{% for item in items %}
+				<div class="cart-row">
+					<div style="flex:2"><img class="row-image" src="{{item.item.image.url}}"></div>
+					<div style="flex:2"><h1>Item Name: {{ item.item.name}}</h1></div>
+					<div style="flex:1"><h1>Individual price: {{ item.item.price }}</h1></div>
+					<div style="flex:1"><h1>Total Price: {{ item.get_total }}</h1></div>
+					<div style="flex:1"><h1>Amount: {{ item.quantity }}</h1></div>
+				</div>
+			{% endfor %}
+			<h1>Items: {{ order.get_cart_items }}</h1>
+			<h1>Total: {{ order.get_cart_total }}</h1>
 		</div>
 	</div>
+{% endblock content %}

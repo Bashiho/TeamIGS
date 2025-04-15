@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import (
-    IndexView,
+    # IndexView,
     DetailView,
+    index,
     cart,
     checkout,
     updateItem,
+    processOrder,
 )
 from django.conf.urls.static import static 
 from django.conf import settings
@@ -29,12 +31,14 @@ from django.conf import settings
 app_name = "TeamIGS"
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", IndexView.as_view(), name="index"),
+    # path("", IndexView.as_view(), name="index"),
+    path("", index, name="index"),
     path("<int:pk>/", DetailView.as_view(), name="detail"),
     # path("cart/", CartView.as_view(), name="cart"),
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
+    path("processOrder/", processOrder, name="processOrder")
     
     # Not implemented yet
     # Page containing list of categories, not working
