@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import (
-    IndexView,
+    # IndexView,
     DetailView,
+    index,
     cart,
-    InCategoryView,
-    loginView,
     checkout,
     updateItem,
+    processOrder,
 )
 from django.conf.urls.static import static 
 from django.conf import settings
@@ -31,18 +31,17 @@ from django.conf import settings
 app_name = "TeamIGS"
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", IndexView.as_view(), name="index"),
+    path("", index, name="index"),
     path("<int:pk>/", DetailView.as_view(), name="detail"),
-    # path("cart/", CartView.as_view(), name="cart"),
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
-    path("update_Item/", updateItem, name="update_Item"),
-    # Category pages moved to low priority, might not be properly implemented for a while
+    path("updateItem/", updateItem, name="updateItem"),
+    path("processOrder/", processOrder, name="processOrder")
+    
+    # Not implemented yet
     # Page containing list of categories, not working
-    path("category/", InCategoryView.as_view(), name="category"),
+    # path("category/", InCategoryView.as_view(), name="category"),
     # Page containing items within category
-    path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
-    # Currently placeholder, requires login.html to be made
-    path("login/", loginView.as_view(), name="login"),
+    # path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

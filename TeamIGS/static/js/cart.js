@@ -1,17 +1,18 @@
 function changeQuantity(itemId, action){
     console.log('USER:', user)
-    // Commented out until accounts are implemented to prevent erros
+    // Commented out some lines to prevent errors when signed into admin account
+    // Add back if/when accounts are implemented
     // if (user == 'AnonymousUser'){
-    //     console.log('User not authenticated')
+    // console.log('User not authenticated')
     addCookieItem(itemId, action)
     // }else{
-    //     console.log('User authenticated')
-    //     updateUserOrder(itemId, action)
+        // console.log('User authenticated')
+        // updateUserOrder(itemId, action)
     // }
 }
 
 function updateUserOrder(itemId, action){
-    var url = '/update-item/'
+    var url = '/updateItem/'
     console.log('URL:', url)
     fetch(url,{
         method:'POST',

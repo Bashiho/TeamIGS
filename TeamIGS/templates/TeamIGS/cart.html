@@ -1,58 +1,12 @@
 <!DOCTYPE html>
 {% load static %}
-
-<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
-
-<script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
 <head>
-    <script type="text/javascript">
-        var user = '{{request.user}}'
-
-        function getToken(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-        var csrftoken = getToken('csrftoken')
-
-        function getCookie(name){
-            var cookieArray = document.cookie.split(";");
-
-            for(var i = 0; i < cookieArray.length; i++){
-                var cookiePair = cookieArray[i].split("=");
-
-                if(name == cookiePair[0].trim()) {
-                    return decodeURIComponent(cookiePair[1]);
-                }
-            }
-
-            return null;
-        }
-        var cart = JSON.parse(getCookie('cart'))
-
-        if (cart == undefined){
-            cart = {}
-            console.log('Created Cart', cart)
-            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
-        }
-        console.log("Cart:", cart)
-    </script>
+<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
+<script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
 </head>
 {% comment %} Header with links to other important pages {% endcomment %}
 <a href="{% url 'index' %}">Home</a>
 {% comment %} <a href=" {% url 'category' %}">Categories</a> {% endcomment %}
-
-{% comment %} Requires implementation of items in cart {% endcomment %}
 
 <div class="row">
 	<div class="col-lg-12">

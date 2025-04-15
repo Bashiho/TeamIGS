@@ -1,11 +1,5 @@
 from django.contrib import admin
-from .Item import Item
-from .Category import Category
-from .Customer import Customer
-
-# Allows for editing product information when creating page for a product
-# class ItemInLine(admin.TabularInline):
-    # model = product
+from .models import Category, Customer, Item, Order
     
 class ItemAdmin(admin.ModelAdmin):
     fieldsets = [ # Fields of information that is needed from Item class
@@ -25,6 +19,8 @@ class CategoryAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {"fields": ["name"]})
     ]
+
+admin.site.register(Order)
 admin.site.register(Customer)
 admin.site.register(Item,ItemAdmin) # Registers this information to the database
 admin.site.register(Category, CategoryAdmin)

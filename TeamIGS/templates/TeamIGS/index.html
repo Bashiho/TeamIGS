@@ -71,9 +71,9 @@
     </div>
 {% comment %} <a href="{% url 'category' %}">Categories</a> {% endcomment %}
  <!-- list of items on site -->
-{% if item_list %}
+{% if items %}
     <ul>
-    {% for item in item_list %}
+    {% for item in items %}
         <li><a href="{% url 'detail' item.id %}">{{ item.name }}</a></li>
     {% endfor %}
     </ul>
