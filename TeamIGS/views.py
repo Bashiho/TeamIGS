@@ -20,7 +20,7 @@ from .Customer import Customer
 import json
 
 def csstest(request):
-     return render(request, 'TeamIGS/bootstrapTemplates/index.html')
+     return render(request, 'TeamIGS/bootstrapTemplates/bs5index.html')
 
 class IndexView(generic.ListView):
     template_name = "TeamIGS/index.html"
