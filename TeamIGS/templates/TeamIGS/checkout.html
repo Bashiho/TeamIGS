@@ -59,7 +59,7 @@
 		<div class="col-log-6">
 				<h1><a href={% url 'cart' %}> Back To Cart </a></h1>
 				<hr>
-				<h3>Order Summary</h3>
+				<h2>Order Summary</h2>
 				<hr>
 			{% for item in items %}
 				<div class="cart-row">
@@ -69,6 +69,10 @@
 					<div style="flex:1"><h1>Total Price: {{ item.get_total }}</h1></div>
 					<div style="flex:1"><h1>Amount: {{ item.quantity }}</h1></div>
 				</div>
+			<br>
+			<br>
+			<br>
+			<br>
 			{% endfor %}
 			<h1>Items: {{ order.get_cart_items }}</h1>
 			<h1>Total: {{ order.get_cart_total }}</h1>

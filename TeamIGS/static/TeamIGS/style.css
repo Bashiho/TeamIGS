@@ -24,9 +24,9 @@ h1 {
   color: aliceblue;
 }
 
-h3 {
+h2 {
 color:aliceblue;
-font-size: 100px;
+font-size: 50px;
 }
 
 .cart-link {
@@ -67,9 +67,9 @@ font-size: 100px;
     color:rgb(137, 5, 203);
 }
 
+
 .box-element .chg-quantity{
-  /* background: white; */
-  width: 1%
+  width: 1.5%;
 }
 
 /* limits size of images on item page */
@@ -78,6 +78,16 @@ font-size: 100px;
 }
 
 .checkout-form {
-  background-color: black;
+  /* background-color: black; */
   color: aliceblue;
+}
+
+.row-image {
+  border: white;
+  border-radius: 5px;
+  border-style: solid;
+  min-width: 200px;
+  max-width: 200px;
+  float: left;
+  margin-right: 15px;
 }

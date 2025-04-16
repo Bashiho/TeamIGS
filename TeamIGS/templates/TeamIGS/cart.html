@@ -37,9 +37,9 @@
                 <div style="flex:1">
                     <p class="quantity">Amount: {{item.quantity}}</p>
                     <div class="quantity">
-                        <img class="chg-quantity" onclick="changeQuantity({{item.item.id}}, 'add')" src="{% static  'images/arrow-up.png' %}">
+                        <img class="chg-quantity" onclick="changeQuantity({{item.item.id}}, 'add')" src="{% static  'images/up-arrow-white.png' %}">
 
-                        <img class="chg-quantity" onclick="changeQuantity({{item.item.id}}, 'remove')" src="{% static  'images/arrow-down.png' %}">
+                        <img class="chg-quantity" onclick="changeQuantity({{item.item.id}}, 'remove')" src="{% static  'images/down-arrow-white.png' %}">
                     </div>
                 </div>
                 <div style="flex:1"><p>Total: ${{item.get_total}}</p></div>
