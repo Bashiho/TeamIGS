@@ -1,3 +1,4 @@
+import django
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import generic
 from django.utils import timezone
@@ -14,15 +15,18 @@ import datetime
 from django.core.mail import send_mail
 
 def index(request):
+    """Renders index.html with list of all items sorted by name"""
     items = Item.objects.order_by("name")
     context={'items':items}
     return render(request, 'TeamIGS/index.html', context)
 
 class DetailView(generic.DetailView):
+    """Uses detail.html template to create page with description of a specific item"""
     model = Item
     template_name = "TeamIGS/detail.html"
 
 def cart(request):
+    """Uses Cookies to retrieve cart object for user and renders the cart.html template using the cart"""
     cartData = cartFromCookie(request)
     order = cartData['order']
     items = cartData['items']
@@ -31,31 +35,58 @@ def cart(request):
     return render(request, 'TeamIGS/cart.html', context)
         
 def updateItem(request):
-	data = json.loads(request.body)
-	itemId = data['itemId']
-	action = data['action']
+    """Used to update quantity of an item stored in the cart
+    Parameters:
+    itemId (int): ID of the item that will be adjusted
+    action (str): Determines what will be done to the quantity, either adding to or removing from it
+    customer (customer): Customer object based on user given by cookie
+    item (item): Item determined by itemId
+    order (order): Order containing all items in cart
+    created (boolean): If the order had to be created or not
+    orderItem(orderItem): Item within the order
 
-	customer = request.user.customer
-	item = Item.objects.get(id=itemId)
-	order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    Returns: 
+    jsonResponse: lets user know that the item was added/removed
+    """
+    data = json.loads(request.body)
+    itemId = data['itemId']
+    action = data['action']
 
-	orderItem, created = OrderItem.objects.get_or_create(order=order, item=item)
+    customer = request.user.customer
+    item = Item.objects.get(id=itemId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
-	if action == 'add':
-		orderItem.quantity = (orderItem.quantity + 1)
-	elif action == 'remove':
-		orderItem.quantity = (orderItem.quantity - 1)
+    orderItem, created = OrderItem.objects.get_or_create(order=order, item=item)
 
-	orderItem.save()
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
 
-	if orderItem.quantity <= 0:
-		orderItem.delete()
+    orderItem.save()
 
-	return JsonResponse('Item was added', safe=False)
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+    if action == 'add':
+        return JsonResponse('Item was added', safe=False)
+    elif action == 'remove':
+        return JsonResponse('Item was removed', safe=False)
+    else:
+        return
 
 def checkout(request):
+    """Renders checkout.html with list of items in cart given by cookie
+
+    Parameters:
+    cartData (dict): dictionary of all information in the user's cart
+    order (order): Order object based on user's cart
+    items (dict): Dictionary of items in cart
+
+    Returns:
+    Renders request with information about user's cart
+    """
     cartData = cartFromCookie(request)
-    cartItems = cartData['cartItems']
     order = cartData['order']
     items = cartData['items']
 
@@ -63,6 +94,7 @@ def checkout(request):
     return render(request, 'TeamIGS/checkout.html', context)
 
 def processOrder(request):
+    """Directs user to basic page reading "Order Complete", doesn't currently actually handle orders"""
     # Potentially set up a process to email the user with information about the order
     # send_mail(
     #     "TeamIGS Order",

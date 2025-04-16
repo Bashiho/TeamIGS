@@ -34,22 +34,12 @@ class Item(models.Model):
     image = models.ImageField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-    slug = models.SlugField(max_length=200, db_index=True, default=1)
 
     class Meta:
         ordering = ('name',)
     
     def __str__(self):
         return self.name
-
-    def getAbsoluteURL(self):
-        return reverse("TeamIGS:detail", kwargs={'slug': self.slug})
-    
-    def getAddToCartURL(self):
-        return reverse("TeamIGS:add-to-cart", kwargs={'slug', self.slug})
-
-    def getRemoveFromCartURL(self):
-        return reverse("TeamIGS:remove-from-cart", kwargs={'slug', self.slug})
 
 
 class Order(models.Model):

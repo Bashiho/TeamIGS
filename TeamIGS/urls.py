@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
 from .views import (
     # IndexView,
     DetailView,
@@ -30,12 +31,13 @@ from django.conf import settings
 
 app_name = "TeamIGS"
 urlpatterns = [
+    path('admin/doc/', include('django.contrib.admindocs.urls')),
     path("admin/", admin.site.urls),
     path("", index, name="index"),
     path("<int:pk>/", DetailView.as_view(), name="detail"),
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
-    path("processOrder/", processOrder, name="processOrder")
+    path("processOrder/", processOrder, name="processOrder"),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
