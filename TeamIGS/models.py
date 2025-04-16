@@ -8,6 +8,7 @@ class Category(models.Model):
 
     class Meta:
         ordering = ('name',)
+        verbose_name_plural = "Categories"
 
     # returns all categories
     @staticmethod
