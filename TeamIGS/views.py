@@ -15,13 +15,13 @@ import datetime
 from django.core.mail import send_mail
 
 def index(request):
-    """Renders index.html with list of all items sorted by name"""
+    """Renders :template:`/templates/TeamIGS/index.html` with list of all items sorted by name"""
     items = Item.objects.order_by("name")
     context={'items':items}
     return render(request, 'TeamIGS/index.html', context)
 
 class DetailView(generic.DetailView):
-    """Uses detail.html template to create page with description of a specific item"""
+    """Uses :template:`/TeamIGS/detail.html` template to create page with description of a specific item"""
     model = Item
     template_name = "TeamIGS/detail.html"
 

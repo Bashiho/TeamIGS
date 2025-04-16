@@ -4,31 +4,57 @@ import datetime
 from django.conf import settings
 
 class Category(models.Model):
+    """Defines a cateogry for an item. Currently has no use, but could be used in the future to implement a sorting system.
+    Related to Items.
+
+    Variables:
+    name (string): String that contains the name of the Category.
+    """
     name = models.CharField(max_length=50)
 
     class Meta:
+        """Provides information about how this class should be seen in database"""
         ordering = ('name',)
         verbose_name_plural = "Categories"
 
     # returns all categories
     @staticmethod
     def get_all_categories():
+        """Returns a list of all categories"""
         return Category.objects.all()
 
     def __str__(self):
+        """Returns category name as a string"""
         return self.name
 
 
 class Customer(models.Model):
-	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
-	name = models.CharField(max_length=200, null=True)
-	email = models.CharField(max_length=200)
+    """Model stored in each instance alongside cart. Mostly used for accounts in the event that they are implemented.
+    
+    Variables:
+    :model:`auth.User`: Django's built in User class, used for handling signing in/out of an account.
+    name (str): String containing account name.
+    email (str): String containing user's email.
+    """
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200)
 
-	def __str__(self):
-		return self.name
+    def __str__(self):
+        """Returns customer's name as string"""
+        return self.name
 
 
 class Item(models.Model):
+    """Model that defines the items to be sold on the Ecommerce site.
+    
+    Variables:
+    name (str): String containing name of item.
+    description (str): String containing a brief description of item.
+    image (image): Contains path to image of an item.
+    price (double): Double containing price of an item.
+    :model:`Category` (Category): Category of an item.
+    """
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     image = models.ImageField(null=True, blank=True)
@@ -36,35 +62,57 @@ class Item(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
 
     class Meta:
+        """Provides information about how this class should be seen in database"""
         ordering = ('name',)
     
     def __str__(self):
+        """Returns Item name as a string"""
         return self.name
 
 
 class Order(models.Model):
-	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-	date_ordered = models.DateTimeField(auto_now_add=True)
-	complete = models.BooleanField(default=False)
-	transaction_id = models.CharField(max_length=100, null=True)
+    """Model containing information about a user's order. Used alongside cart.
 
-	def __str__(self):
-		return str(self.id)
+    Variables:
+    :models:`Customer`(Customer): Customer that an order is tied to.
+    dateOrdered (): Time that an order was created.
+    complete (boolean): If the order is completed or not.
+    transactionId (str): Id of the transaction.
+    """
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    dateOrdered = models.DateTimeField(auto_now_add=True)
+    complete = models.BooleanField(default=False)
+    transactionId = models.CharField(max_length=100, null=True)
 
-	@property
-	def get_cart_total(self):
-		orderitems = self.orderitem_set.all()
-		total = sum([item.get_total for item in orderitems])
-		return total 
+    def __str__(self):
+        """Returns order's id"""
+        return str(self.id)
 
-	@property
-	def get_cart_items(self):
-		orderitems = self.orderitem_set.all()
-		total = sum([item.quantity for item in orderitems])
-		return total
+    @property
+    def get_cart_total(self):
+        """Returns total cost of all items in the cart"""
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total 
+    
+    @property
+    def get_cart_items(self):
+        """Returns all items in cart"""
+        orderitems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
 
 
 class OrderItem(models.Model):
+    """Model that handles items within an order. Always used alongside :models:'Order'.
+    
+    Varaibles:
+    :models:`auth.User` (User): User that the order is tied to.
+    quantity (int): Amount of the item that is in the cart.
+    :models:`Item`: Item that is being referred to.
+    ordered (boolean): Boolean on if the item has been ordered or not.
+    :models:`Order`: Order that the OrderItem is tied to.
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True)
@@ -73,7 +121,9 @@ class OrderItem(models.Model):
 
 
     def __str__(self):
+        """Returns how many of an item is in the cart"""
         return f"{self.quantity} of {self.item.name}"
 
     def getTotalItemPrice(self):
+        """Returns the total cost of an item in the cart based on quantity in cart."""
         return self.quantity * self.item.price
