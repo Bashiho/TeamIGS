@@ -19,6 +19,9 @@ def index(request):
     
     Code Date: April 15
     Programmer: Russell de Vries
+
+    Code Date: April 10th
+    Programmer: Finn Bishop
     """
     items = Item.objects.order_by("name")
     context={'items':items}
@@ -38,6 +41,9 @@ def cart(request):
     
     Code Date: April 8
     Programmer: Russell de Vries
+
+    Code Date: April 15th
+    Programmer: Finn Bishop
     """
     cartData = cartFromCookie(request)
     order = cartData['order']
@@ -95,6 +101,10 @@ def checkout(request):
     Code Date: April 15
     Programmer: Russell de Vries
     
+    Code Date: April 1th
+    Programmer: Finn Bishop
+    Notes: Primary focus is on cart.html
+
     Parameters:
     cartData (dict): dictionary of all information in the user's cart
     order (order): Order object based on user's cart
