@@ -37,6 +37,26 @@ python --version
 # Download the latest version if it is not installed
 # https://www.python.org/downloads/
 
+# Now we are going to make a secret key. This is used for encryption purposes, and should be kept secret.
+# There are two ways to do this
+
+# Option 1
+# This is the easiest method. Simply visit https://djecrety.ir/ and generate a key.
+
+# Option 2
+# This method takes longer than the first and has no significant benefits over the other.
+# Create a Django project
+# Create a file directory where you want the project to be stored
+mkdir DjangoProject
+# Navigate into that directory
+cd DjangoProject
+# Create a django project
+$ django-admin startproject projectname djangoproject
+
+# After you have your key, create a file called '.env'. 
+# In this .env file, write the following, and paste your key where it says 'YOUR KEY' 
+# DJANGOSECRET = 'YOUR KEY'
+
 # Clone the repository
 git clone https://github.com/Bashiho/TeamIGS.git
 
@@ -53,6 +73,8 @@ source ~/.virtualenvs/djangodev/bin/activate
 
 # Install Requirements
 pip install -r requirements.txt
+
+# Finally, move your .env file into the directory alongside manage.py
 ```
 
 ## Setup
