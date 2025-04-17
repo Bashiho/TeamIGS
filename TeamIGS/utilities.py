@@ -3,6 +3,16 @@ from .models import *
 
 # Handles data of cart from cookie in views
 def cartFromCookie(request):
+    """Creates a cart dictionary from the cart cookie
+    
+    Variables: 
+    cart (dict) = cart that is pulled from the cookie.
+    items (arr) = Array of items in the cart.
+    order (Order) = Order object with information from the cart.
+    cartItems (int) = Number of items in cart
+
+    Returns: Context with information about items, order, and cartItems
+    """
     cart = json.loads(request.COOKIES['cart'])
     print("Cart:", cart)
     items = []

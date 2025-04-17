@@ -15,13 +15,13 @@ import datetime
 from django.core.mail import send_mail
 
 def index(request):
-    """Renders :template:`/templates/TeamIGS/index.html` with list of all items sorted by name"""
+    """Renders /templates/TeamIGS/index.html with list of all items sorted by name"""
     items = Item.objects.order_by("name")
     context={'items':items}
     return render(request, 'TeamIGS/index.html', context)
 
 class DetailView(generic.DetailView):
-    """Uses :template:`/TeamIGS/detail.html` template to create page with description of a specific item"""
+    """Uses /TeamIGS/detail.html template to create page with description of a specific item"""
     model = Item
     template_name = "TeamIGS/detail.html"
 
@@ -35,18 +35,18 @@ def cart(request):
     return render(request, 'TeamIGS/cart.html', context)
         
 def updateItem(request):
-    """Used to update quantity of an item stored in the cart
+    """Used to update quantity of an item stored in the cart. Accessed from cart.html.
     Parameters:
-    itemId (int): ID of the item that will be adjusted
-    action (str): Determines what will be done to the quantity, either adding to or removing from it
-    customer (customer): Customer object based on user given by cookie
-    item (item): Item determined by itemId
-    order (order): Order containing all items in cart
-    created (boolean): If the order had to be created or not
-    orderItem(orderItem): Item within the order
+    itemId (int): ID of the item that will be adjusted.
+    action (str): Determines what will be done to the quantity, either adding to or removing from it.
+    customer (customer): Customer object based on user given by cookie.
+    item (item): Item determined by itemId.
+    order (order): Order containing all items in cart.
+    created (boolean): If the order had to be created or not.
+    orderItem (orderItem): Item within the order.
 
     Returns: 
-    jsonResponse: lets user know that the item was added/removed
+    jsonResponse: lets user know that the item was added/removed.
     """
     data = json.loads(request.body)
     itemId = data['itemId']
@@ -70,10 +70,8 @@ def updateItem(request):
 
     if action == 'add':
         return JsonResponse('Item was added', safe=False)
-    elif action == 'remove':
+    else: 
         return JsonResponse('Item was removed', safe=False)
-    else:
-        return
 
 def checkout(request):
     """Renders checkout.html with list of items in cart given by cookie

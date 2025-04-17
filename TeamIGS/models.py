@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Category(models.Model):
     """Defines a cateogry for an item. Currently has no use, but could be used in the future to implement a sorting system.
-    Related to Items.
+    Related to Item.
 
     Variables:
     name (string): String that contains the name of the Category.
@@ -32,7 +32,7 @@ class Customer(models.Model):
     """Model stored in each instance alongside cart. Mostly used for accounts in the event that they are implemented.
     
     Variables:
-    :model:`auth.User`: Django's built in User class, used for handling signing in/out of an account.
+    User (auth.User): Django's built in User class, used for handling signing in/out of an account.
     name (str): String containing account name.
     email (str): String containing user's email.
     """
@@ -53,7 +53,7 @@ class Item(models.Model):
     description (str): String containing a brief description of item.
     image (image): Contains path to image of an item.
     price (double): Double containing price of an item.
-    :model:`Category` (Category): Category of an item.
+    Category (Category): Category of an item.
     """
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
@@ -74,7 +74,7 @@ class Order(models.Model):
     """Model containing information about a user's order. Used alongside cart.
 
     Variables:
-    :models:`Customer`(Customer): Customer that an order is tied to.
+    Customer (Customer): Customer that an order is tied to.
     dateOrdered (): Time that an order was created.
     complete (boolean): If the order is completed or not.
     transactionId (str): Id of the transaction.
@@ -107,11 +107,11 @@ class OrderItem(models.Model):
     """Model that handles items within an order. Always used alongside :models:'Order'.
     
     Varaibles:
-    :models:`auth.User` (User): User that the order is tied to.
+    User (auth.User): User that the order is tied to.
     quantity (int): Amount of the item that is in the cart.
-    :models:`Item`: Item that is being referred to.
+    Item (Item): Item that is being referred to.
     ordered (boolean): Boolean on if the item has been ordered or not.
-    :models:`Order`: Order that the OrderItem is tied to.
+    Order (Order): Order that the OrderItem is tied to.
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     quantity = models.IntegerField()
