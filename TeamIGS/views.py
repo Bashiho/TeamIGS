@@ -8,25 +8,37 @@ from django.views.generic import View, ListView, DetailView
 # from django.contrib.auth.models import User
 # from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
-from .models import Category, Customer, Item, Order, OrderItem
+from .models import Customer, Item, Order, OrderItem
 from .utilities import cartFromCookie
 import json
 import datetime
 from django.core.mail import send_mail
 
 def index(request):
-    """Renders /templates/TeamIGS/index.html with list of all items sorted by name"""
+    """Renders /templates/TeamIGS/index.html with list of all items sorted by name
+    
+    Code Date: April 15
+    Programmer: Russell de Vries
+    """
     items = Item.objects.order_by("name")
     context={'items':items}
     return render(request, 'TeamIGS/index.html', context)
 
 class DetailView(generic.DetailView):
-    """Uses /TeamIGS/detail.html template to create page with description of a specific item"""
+    """Uses /TeamIGS/detail.html template to create page with description of a specific item
+    
+    Code Date: March 4
+    Programmer: Russell de Vries
+    """
     model = Item
     template_name = "TeamIGS/detail.html"
 
 def cart(request):
-    """Uses Cookies to retrieve cart object for user and renders the cart.html template using the cart"""
+    """Uses Cookies to retrieve cart object for user and renders the cart.html template using the cart
+    
+    Code Date: April 8
+    Programmer: Russell de Vries
+    """
     cartData = cartFromCookie(request)
     order = cartData['order']
     items = cartData['items']
@@ -36,6 +48,10 @@ def cart(request):
         
 def updateItem(request):
     """Used to update quantity of an item stored in the cart. Accessed from cart.html.
+
+    Code Date: April 8
+    Programmer: Russell de Vries
+    
     Parameters:
     itemId (int): ID of the item that will be adjusted.
     action (str): Determines what will be done to the quantity, either adding to or removing from it.
@@ -76,6 +92,9 @@ def updateItem(request):
 def checkout(request):
     """Renders checkout.html with list of items in cart given by cookie
 
+    Code Date: April 15
+    Programmer: Russell de Vries
+    
     Parameters:
     cartData (dict): dictionary of all information in the user's cart
     order (order): Order object based on user's cart
@@ -92,7 +111,11 @@ def checkout(request):
     return render(request, 'TeamIGS/checkout.html', context)
 
 def processOrder(request):
-    """Directs user to basic page reading "Order Complete", doesn't currently actually handle orders"""
+    """Directs user to basic page reading "Order Complete", doesn't currently actually handle orders
+    
+    Code Date: April 15
+    Programmer: Russell de Vries
+    """
     # Potentially set up a process to email the user with information about the order
     # send_mail(
     #     "TeamIGS Order",

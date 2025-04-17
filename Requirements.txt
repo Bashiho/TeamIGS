@@ -2,3 +2,4 @@ django
 mod_wsgi
 python-dotenv
 Pillow
+docutils
