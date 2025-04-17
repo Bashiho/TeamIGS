@@ -3,3 +3,4 @@ mod_wsgi
 python-dotenv
 Pillow
 docutils
+django-bootstrap-v5
