@@ -137,7 +137,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "TeamIGS/static/js",
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'TeamIGS/static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'TeamIGS/static/images/itemImages')
 MEDIA_URL = '/images/'
 
 # Default primary key field type

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
 <head>
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% comment %} <link rel="stylesheet" href="{% static 'css/style.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'TeamIGS/style.css' %}">
 <script type="text/javascript" src="{%static 'js/cart.js' %}"></script>
 <script type="text/javascript">
     var user = '{{request.user}}'

@@ -65,8 +65,8 @@
 				<div class="cart-row">
 					<div style="flex:2"><img class="row-image" src="{{item.item.image.url}}"></div>
 					<div style="flex:2"><h1>Item Name: {{ item.item.name}}</h1></div>
-					<div style="flex:1"><h1>Individual price: {{ item.item.price }}</h1></div>
-					<div style="flex:1"><h1>Total Price: {{ item.get_total }}</h1></div>
+					<div style="flex:1"><h1>Individual price: ${{ item.item.price }}</h1></div>
+					<div style="flex:1"><h1>Total Price: ${{ item.get_total }}</h1></div>
 					<div style="flex:1"><h1>Amount: {{ item.quantity }}</h1></div>
 				</div>
 			<br>
@@ -75,7 +75,7 @@
 			<br>
 			{% endfor %}
 			<h1>Items: {{ order.get_cart_items }}</h1>
-			<h1>Total: {{ order.get_cart_total }}</h1>
+			<h1>Total: ${{ order.get_cart_total }}</h1>
 		</div>
 	</div>
 {% endblock content %}
