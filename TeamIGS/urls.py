@@ -38,17 +38,17 @@ urlpatterns = [
     path("cart/", cart, name="cart"),
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
-    path("processOrder/", processOrder, name="processOrder")
+    path("processOrder/", processOrder, name="processOrder"),
     
     # Not implemented yet
     # Page containing list of categories, not working
     # path("category/", InCategoryView.as_view(), name="category"),
     # Page containing items within category
     # path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
-    path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
+    #path("category/<str:name>/", InCategoryView.as_view(), name="inCategory"),
     # Currently placeholder, requires login.html to be made
-    path("login/", loginView.as_view(), name="login"),
+    #path("login/", loginView.as_view(), name="login"),
     # Css testing page:
-    path("csstest/", views.csstest)
+    path("csstest/", views.csstest),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
