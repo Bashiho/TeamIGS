@@ -19,6 +19,12 @@ def index(request):
     
     Code Date: April 15
     Programmer: Russell de Vries
+
+    Code Date: April 10th
+    Programmer: Finn Bishop
+    
+    Code Date: April 3
+    Programmer: Andy Martinez
     """
     items = Item.objects.order_by("name")
     context={'items':items}
@@ -29,6 +35,7 @@ class DetailView(generic.DetailView):
     
     Code Date: March 4
     Programmer: Russell de Vries
+
     Code Date: April 4
     Programmer: Steven Navarrete
     """
@@ -98,6 +105,13 @@ def checkout(request):
 
     Code Date: April 15
     Programmer: Russell de Vries
+    
+    Code Date: April 1th
+    Programmer: Finn Bishop
+    Notes: Primary focus is on cart.html
+
+    Code Date: April 3
+    Programmer: Andy Martinez
     
     Parameters:
     cartData (dict): dictionary of all information in the user's cart
