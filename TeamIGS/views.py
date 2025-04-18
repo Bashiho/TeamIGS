@@ -19,15 +19,12 @@ def index(request):
     
     Code Date: April 15
     Programmer: Russell de Vries
-<<<<<<< HEAD
 
     Code Date: April 10th
     Programmer: Finn Bishop
-=======
     
     Code Date: April 3
     Programmer: Andy Martinez
->>>>>>> e5c7a667a73f27dcd634af98c0bf0087189dd3b9
     """
     items = Item.objects.order_by("name")
     context={'items':items}
@@ -114,16 +111,13 @@ def checkout(request):
     Code Date: April 15
     Programmer: Russell de Vries
     
-<<<<<<< HEAD
     Code Date: April 1th
     Programmer: Finn Bishop
     Notes: Primary focus is on cart.html
 
-=======
     Code Date: April 3
     Programmer: Andy Martinez
     
->>>>>>> e5c7a667a73f27dcd634af98c0bf0087189dd3b9
     Parameters:
     cartData (dict): dictionary of all information in the user's cart
     order (order): Order object based on user's cart
