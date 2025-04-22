@@ -42,3 +42,7 @@ urlpatterns = [
     path("processOrder/", processOrder, name="processOrder"),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns = [
+    path('search/', views.search, name='search'),
+]
