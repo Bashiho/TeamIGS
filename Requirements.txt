@@ -4,3 +4,4 @@ python-dotenv
 Pillow
 docutils
 django-bootstrap-v5
+python-unittest

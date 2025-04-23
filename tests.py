@@ -1,6 +1,12 @@
 import unittest
-from TeamIGS.modles import Customer, Item, Order, OrderItem
+import django
+import os
 
+os.environ['DJANGO_SETTINGS_MODULE'] = 'TeamIGS.settings'
+django.setup()
+
+
+from TeamIGS.models import Customer, Item, Order, OrderItem
 
 class CustomerTestCase():
     def setup(self):
@@ -53,9 +59,18 @@ class OrderTestCase():
 
 OrderTestSuite = unittest.TestSuite()
 
-class OrderItemTestCase():
+class OrderItemTestCase(unittest.TestCase):
     def runTest(self):
-        orderItem = OrderItem.create(user, quantity, item, ordered, order)
+        # user = 
+        quantity = 5
+        # item = 
+        ordered = True
+        # order = 
+        self.orderItem = OrderItem.create(user, quantity, item, ordered, order)
+
+    def tearDown(self):
+        self.orderItem.dispose()
+        self.orderItem = None
 
     def testDefaultUser(self):
         assert orderItem.user == user, "incorrect default user"
@@ -73,6 +88,10 @@ class OrderItemTestCase():
         assert orderItem.order == order, "incorrect default order"
 
 OrderItemTestSuite = unittest.TestSuite()
-
+OrderItemTestSuite.addTest(OrderItemTestCase("testDefaultUser"))
+OrderItemTestSuite.addTest(OrderItemTestCase("testDefaultQuantity"))
+OrderItemTestSuite.addTest(OrderItemTestCase("testDefaultItem"))
+OrderItemTestSuite.addTest(OrderItemTestCase("testDefaultOrdered"))
+OrderItemTestSuite.addTest(OrderItemTestCase("testDefaultOrder"))
 runner = unittest.TextTestRunner()
-runner.run()
+runner.run(OrderItemTestSuite)
