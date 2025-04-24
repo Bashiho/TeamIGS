@@ -6,7 +6,7 @@ from TeamIGS.models import Customer, Item, Order, OrderItem
 
 class ItemTestCase(TestCase):
     def setUp(self):
-        image = 'TeamIGS/static/images/itemImages/apple_crab.png' # Replace with whatever image you want to use for testing
+        image = 'TeamIGS/static/images/cart-icon.png' # Replace with whatever image you want to use for testing
         Item.objects.create(name="Lamp", description="Simple Lamp", image=image, price=71322.72)
         Item.objects.create(name="Chair", description="Simple Chair", image=image, price=52.16)
 
@@ -25,8 +25,8 @@ class ItemTestCase(TestCase):
     def testItemImage(self):
         lamp = Item.objects.get(name="Lamp")
         chair = Item.objects.get(name="Chair")
-        self.assertEqual(lamp.image, 'TeamIGS/static/images/itemImages/apple_crab.png')
-        self.assertEqual(chair.image, 'TeamIGS/static/images/itemImages/apple_crab.png')
+        self.assertEqual(lamp.image, 'TeamIGS/static/images/cart-icon.png')
+        self.assertEqual(chair.image, 'TeamIGS/static/images/cart-icon.png')
 
     def testItemPrice(self):
         lampPrice = 71322.72
@@ -40,80 +40,96 @@ class ItemTestCase(TestCase):
 
 class CustomerTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create(username="username", password="password", email="email@gmail.com")
+        user = User.objects.create_user(username="username", password="password", email="email@gmail.com")
+        user2 = User.objects.create_user(username="username2", password="password2", email="email2@gmail.com")
         Customer.objects.create(user=user, name="Bob", email="email@gmail.com")
-        Customer.objects.create(user=user, name="Gerald", email="email2@gmail.com")
+        Customer.objects.create(user=user2, name="Gerald", email="email2@gmail.com")
 
     def testCustomerUser(self):
-        user = User.objects.create(username="username", password="password", email="email@gmail.com")
+        user = User.objects.get(username="username")
+        user2 = User.objects.get(username="username2")
         bob = Customer.objects.get(name="Bob")
         gerald = Customer.objects.get(name="Gerald")
-        self.assertEquals(bob.user, user)
-        self.asserEquals(gerald.user, user)
+        self.assertEqual(bob.user, user)
+        self.assertEqual(gerald.user, user2)
 
     def testCustomerName(self):
         bob = Customer.objects.get(name="Bob")
         gerald = Customer.objects.get(name="Gerald")
-        self.assertEquals(bob.name, "Bob")
-        self.asserEquals(gerald.name, "Gerald")
+        self.assertEqual(bob.name, "Bob")
+        self.assertEqual(gerald.name, "Gerald")
 
     def testCustomerEmail(self):
         bob = Customer.objects.get(name="Bob")
         gerald = Customer.objects.get(name="Gerald")
-        self.assertEquals(bob.email, "email@gmail.com")
-        self.asserEquals(gerald.email, "email2@gmail.com")
+        self.assertEqual(bob.email, "email@gmail.com")
+        self.assertEqual(gerald.email, "email2@gmail.com")
 
 class OrderTestCase(TestCase):
     def setUp(self):
+        user = User.objects.create_user(username="username", password="password", email="email@gmail.com")
+        user2 = User.objects.create_user(username="username2", password="password2", email="email2@gmail.com")
         customer = Customer.objects.create(user=user, name="Bob", email="email@gmail.com")
-        Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 4, 24), complete=True, transactionId="abcdefghijklmnopqrstuvwxyz")
-        Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 1, 9), complete=False, transactionId="123")
+        customer2 = Customer.objects.create(user=user2, name="Gerald", email="email2@gmail.com")
+        Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 4, 24, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=True, transactionId="abcdefghijklmnopqrstuvwxyz")
+        Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 1, 9, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=False, transactionId="123")
 
-    def TestOrderCustomer(self):
+    def testOrderCustomer(self):
         customer = Customer.objects.get(name="Bob")
+        customer2 = Customer.objects.get(name="Gerald")
         order1 = Order.objects.get(complete=True)
         order2 = Order.objects.get(complete=False)
-        self.assertEquals(order1.customer, customer)
-        self.assertEquals(order2.customer, customer)
+        self.assertEqual(order1.customer, customer)
+        self.assertEqual(order2.customer, customer2)
 
-    def TestOrderDateOrdered(self):
+    def testOrderDateOrdered(self):
         order1 = Order.objects.get(complete=True)
         order2 = Order.objects.get(complete=False)
-        self.assertEquals(order1.dateOrdered, datetime.datetime(2025, 4, 24))
-        self.assertEquals(order2.dateOrdered, datetime.datetime(2025, 1, 9))
+        self.assertEqual(order1.dateOrdered, datetime.datetime(2025, 4, 24, 0, 0, 0, tzinfo=datetime.timezone.utc))
+        self.assertEqual(order2.dateOrdered, datetime.datetime(2025, 1, 9, 0, 0, 0, tzinfo=datetime.timezone.utc))
 
-    def TestOrderComplete(self):
+    def testOrderComplete(self):
         order1 = Order.objects.get(complete=True)
         order2 = Order.objects.get(complete=False)
-        self.assertEquals(order1.complete, True)
-        self.assertEquals(order2.complete, False)
+        self.assertEqual(order1.complete, True)
+        self.assertEqual(order2.complete, False)
 
-    def TestOrderTransactionID(self):
+    def testOrderTransactionID(self):
         order1 = Order.objects.get(complete=True)
         order2 = Order.objects.get(complete=False)
-        self.asserEquals(order1.transactionId, "abcdefghijklmnopqrstuvwxyz")
-        self.assertEquals(order2.transactionId, "123")
+        self.assertEqual(order1.transactionId, "abcdefghijklmnopqrstuvwxyz")
+        self.assertEqual(order2.transactionId, "123")
 
 class OrderItemTestCase(TestCase):
     def setUp(self):
-        user = User.objects.create() # Not sure how to get this working tbh
+        image = 'TeamIGS/static/images/cart-icon.png'
+        Item.objects.create(name="Lamp", description="Simple Lamp", image=image, price=71322.72)
         lamp = Item.objects.get(name="Lamp")
+
+        user = User.objects.create_user(username="username", password="password", email="email@gmail.com")
+        
+        customer = Customer.objects.create(user=user, name="Bob", email="email@gmail.com")
+        Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 4, 24), complete=True, transactionId="abcdefghijklmnopqrstuvwxyz")
         order = Order.objects.get(complete=True)
-        OrderItem.objects.create(user=user, quantity=5, item=lamp, ordered=False, order=order)
+
+        OrderItem.objects.create(user=user, quantity=5, item=Item.objects.get(name="Lamp"), ordered=False, order=order)
         
-    # def TestOrderItemUser(self):
-        
-    def TestOrderItemQuantity(self):
+    def testOrderItemUser(self):
+        user = User.objects.get(username="username")
         lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
-        self.assertEquals(lamp.quantity, 5)
+        self.assertEqual(lamp.user, user)
+        
+    def testOrderItemQuantity(self):
+        lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
+        self.assertEqual(lamp.quantity, 5)
 
     # def TestOrderItemItem(self):
         
-    def TestOrderItemOrdered(self):
+    def testOrderItemOrdered(self):
         lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
-        self.assertEquals(lamp.ordered, False)
+        self.assertEqual(lamp.ordered, False)
 
-    def TestOrderItemOrder(self):
+    def testOrderItemOrder(self):
         order = Order.objects.get(complete=True)
         lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
-        self.assertEquals(lamp.order, order)
+        self.assertEqual(lamp.order, order)
