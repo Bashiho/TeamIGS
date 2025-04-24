@@ -64,15 +64,18 @@ git clone https://github.com/Bashiho/TeamIGS.git
 cd TeamIGS
 
 # Create a Virtual Environment for the project
-python3 -m venv ~/.virtualenvs/djangodev
+python -m venv ~/.virtualenvs/venv
 
 # Activate the Virtual Environment
-source ~/.virtualenvs/djangodev/bin/activate
-# Alternatively, if source command is not available
-. ~/.virtualenvs/djangodev/bin/activate
+# If you are on Linux or Mac
+source ~/.virtualenvs/venv/bin/activate
+# If you are on Windows
+~\.virtualenvs\djangodev\scripts\activate.bat
 
 # Install Requirements
 pip install -r requirements.txt
+# You might get an error, and it might ask you to update pip. To do so, run the command that it prompts you to run. It will look something like this for Windows users.
+python.exe -m pip install --upgrade pip
 
 # Finally, move your .env file into the directory alongside manage.py
 ```
@@ -104,15 +107,14 @@ python manage.py runserver
 ```
 
 From here, there will be a url provided in the console. It will look something like this:\
-http://127.0.0.1:8000\
+http://127.0.0.1:8000 \
 Navigating to this page will lead you to an empty home page. To add items, navigate to\
-http://127.0.0.1:8000/admin\
+http://127.0.0.1:8000/admin \
 From here, sign into the admin account you created earlier.\
-Then, create a category for objects to be placed into. This is done by clicking the button that reads "+Add" next to "Categories".\
-![Add Categories](https://github.com/Bashiho/TeamIGS/blob/Updated-ReadMe/Resources/readme-arrow-categories.png)\
-From here, simply fill out the fields with the desired information.\
 Then, we can create items. This is done by clicking the "+Add" button next to "Items".\
-![Add Items](https://github.com/Bashiho/TeamIGS/blob/Updated-ReadMe/Resources/readme-arrow-items.png)\
-From here, fill out the fields with the information that you desire. The only section of note is images, which you can upload directly from your computer. They will be stored locally alongside the project files in /static/images.\
-These items should automatically appear on the home page of the website as they are added.\
+![Add Items](https://github.com/Bashiho/TeamIGS/blob/main/Resources/readme-arrow-items.png?raw=true)\
+From here, fill out the fields with the information that you desire. The only section of note is images, which you can upload directly from your computer. They will be stored locally alongside the project files in /static/images/itemImages.\
+These items should automatically appear on the home page of the website as they are added.
 
+Setting up a webserver is up to you. There are several ways to do this, and that is a choice that you, the user, must make. For now, though, you can run things locally while testing. Just make sure to follow Django's advice for what to do before going into production. The checklist can be found below. \
+https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/

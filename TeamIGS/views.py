@@ -31,14 +31,13 @@ def index(request):
     return render(request, 'TeamIGS/index.html', context)
 
 class DetailView(generic.DetailView):
-    
     """Uses /TeamIGS/detail.html template to create page with description of a specific item
     
     Code Date: March 4
     Programmer: Russell de Vries
-    
-    Code Date: April 3
-    Programmer: Andy Martinez
+
+    Code Date: April 4
+    Programmer: Steven Navarrete
     """
     model = Item
     template_name = "TeamIGS/detail.html"
@@ -48,9 +47,8 @@ def cart(request):
     
     Code Date: April 8
     Programmer: Russell de Vries
-
-    Code Date: April 15th
-    Programmer: Finn Bishop
+    Code Date: April 4
+    Programmer: Steven Navarrete
     """
     cartData = cartFromCookie(request)
     order = cartData['order']
@@ -64,9 +62,6 @@ def updateItem(request):
 
     Code Date: April 8
     Programmer: Russell de Vries
-    
-    Code Date: April 3
-    Programmer: Andy Martinez
     
     Parameters:
     itemId (int): ID of the item that will be adjusted.
@@ -126,7 +121,6 @@ def checkout(request):
     Returns:
     Renders request with information about user's cart
     """
-    
     cartData = cartFromCookie(request)
     order = cartData['order']
     items = cartData['items']
@@ -139,9 +133,6 @@ def processOrder(request):
     
     Code Date: April 15
     Programmer: Russell de Vries
-    
-    Code Date: April 3
-    Programmer: Andy Martinez
     """
     # Potentially set up a process to email the user with information about the order
     # send_mail(
