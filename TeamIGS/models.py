@@ -19,11 +19,6 @@ class Customer(models.Model):
     name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200)
 
-    @classmethod
-    def create(cls, user, name, email):
-        customer = cls(user=user, name=name, email=email)
-        return customer
-
     def __str__(self):
         """Returns customer's name as string"""
         return self.name
@@ -52,11 +47,6 @@ class Item(models.Model):
         """Provides information about how this class should be seen in database"""
         ordering = ('name',)
     
-    @classmethod
-    def create(cls, name, description, image, price):
-        item = cls(name=name, description=description, image=image, price=price)
-        return item
-
     def __str__(self):
         """Returns Item name as a string"""
         return self.name
@@ -78,11 +68,6 @@ class Order(models.Model):
     dateOrdered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
     transactionId = models.CharField(max_length=100, null=True)
-
-    @classmethod
-    def create(cls, customer, dateOrdered, complete, transactionId):
-        order = cls(customer=customer, dateOrdered=dateOrdered, complete=complete, transactionId=transactionId)
-        return order
 
     def __str__(self):
         """Returns order's id"""
@@ -121,12 +106,6 @@ class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True)
     ordered = models.BooleanField(default = False)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-
-
-    @classmethod
-    def create(cls, user, quantity, item, ordered, order):
-        orderItem = cls(user=user,quantity=quantity,item=item, ordered=ordered, order=order)
-        return orderItem
         
     def __str__(self):
         """Returns how many of an item is in the cart"""
