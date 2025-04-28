@@ -5,3 +5,4 @@ Pillow
 docutils
 django-bootstrap-v5
 python-unittest
+freezegun # needed for tests

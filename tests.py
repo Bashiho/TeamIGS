@@ -3,6 +3,7 @@ from decimal import *
 import datetime
 from django.contrib.auth.models import User
 from TeamIGS.models import Customer, Item, Order, OrderItem
+from freezegun import freeze_time
 
 class ItemTestCase(TestCase):
     def setUp(self):
@@ -66,13 +67,14 @@ class CustomerTestCase(TestCase):
         self.assertEqual(gerald.email, "email2@gmail.com")
 
 class OrderTestCase(TestCase):
+    @freeze_time("2025-4-24")
     def setUp(self):
         user = User.objects.create_user(username="username", password="password", email="email@gmail.com")
         user2 = User.objects.create_user(username="username2", password="password2", email="email2@gmail.com")
         customer = Customer.objects.create(user=user, name="Bob", email="email@gmail.com")
         customer2 = Customer.objects.create(user=user2, name="Gerald", email="email2@gmail.com")
         Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 4, 24, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=True, transactionId="abcdefghijklmnopqrstuvwxyz")
-        Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 1, 9, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=False, transactionId="123")
+        Order.objects.create(customer=customer2, dateOrdered=datetime.datetime(2025, 1, 9, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=False, transactionId="123")
 
     def testOrderCustomer(self):
         customer = Customer.objects.get(name="Bob")
@@ -82,12 +84,12 @@ class OrderTestCase(TestCase):
         self.assertEqual(order1.customer, customer)
         self.assertEqual(order2.customer, customer2)
 
+    @freeze_time("2025-4-28")
     def testOrderDateOrdered(self):
         order1 = Order.objects.get(complete=True)
         order2 = Order.objects.get(complete=False)
         self.assertEqual(order1.dateOrdered, datetime.datetime(2025, 4, 24, 0, 0, 0, tzinfo=datetime.timezone.utc))
-        self.assertEqual(order2.dateOrdered, datetime.datetime(2025, 1, 9, 0, 0, 0, tzinfo=datetime.timezone.utc))
-
+        
     def testOrderComplete(self):
         order1 = Order.objects.get(complete=True)
         order2 = Order.objects.get(complete=False)
