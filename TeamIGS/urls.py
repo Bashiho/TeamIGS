@@ -24,6 +24,7 @@ from .views import (
     checkout,
     updateItem,
     processOrder,
+    sendEmail,
 )
 from . import views
 

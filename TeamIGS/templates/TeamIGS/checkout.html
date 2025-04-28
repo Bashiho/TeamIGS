@@ -3,7 +3,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <link rel="stylesheet" type="text/css" href="{% static 'TeamIGS/style.css' %}">
-
+<script>
+	var email = document.getElementById("email")
+	localStorage.setItem("email", email)
+</script>	
 </head>
 <body>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -16,14 +19,14 @@
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="box-element" id="form-wrapper">
-				<form id="checkout-form" class="checkout-form">
+				<form id="checkout-form" class="checkout-form" method="post">
 					<div id="user-info">
 						<p>Personal Information</p>
 						<div class="form-field">
 							<input required class="form-control" type="text" name="name" placeholder="Name">
 						</div>
 						<div class="form-field">
-							<input required class="form-control" type="text" name="email" placeholder="Email">
+							<input required class="form-control" id="email" type="text" name="email" placeholder="Email">
 						</div>
 					</div>
 

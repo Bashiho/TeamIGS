@@ -6,6 +6,8 @@
 <script type="text/javascript">
         cart = {}
 		document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+        const email = localStorage.getItem("email");
 </script>
 <meta http-equiv="refresh" content="3; {% url 'index' %}">
 
