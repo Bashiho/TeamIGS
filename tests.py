@@ -125,7 +125,10 @@ class OrderItemTestCase(TestCase):
         lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
         self.assertEqual(lamp.quantity, 5)
 
-    # def TestOrderItemItem(self):
+    def testOrderItemItem(self):
+        lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
+        lampItem = Item.objects.get(name="Lamp")
+        self.assertEqual(lamp.item, lampItem)
         
     def testOrderItemOrdered(self):
         lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
