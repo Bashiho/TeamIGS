@@ -128,6 +128,19 @@ def checkout(request):
     items = cartData['items']
 
     context = {'items':items, 'order':order}
+
+    if request.method == 'POST':
+        userEmail = request.POST.get('email')
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zipCode = request.POST.get('zipcode')
+        country = request.POST.get('country')
+        if userEmail:
+            sendEmail(userEmail, order, items, name, address, city, state, zipCode, country)
+            return redirect(processOrder)
+
     
     return render(request, 'TeamIGS/checkout.html', context)
 
@@ -141,13 +154,24 @@ def processOrder(request):
     cartData = cartFromCookie(request)
     order = cartData['order']
     items = cartData['items']
-    sendEmail(request.POST.get('email'), order, items)
+    userEmail = request.POST.get('email')
     
     return render(request, 'TeamIGS/processOrder.html')
 
-def sendEmail(userEmail, order, items):
+def sendEmail(userEmail, order, items, name, address, city, state, zipCode, country):
+    """Function to send email to user when checkout button is pressed.
+
+    Code Date: April 29
+    Programmer: Russell de Vries
+    """
     subject = "Order Confirmation From TeamIGS"
     html_message = render_to_string('TeamIGS/email.html', {
+        'name': name,
+        'address': address,
+        'city': city,
+        'state': state,
+        'zipCode': zipCode,
+        'country': country,
         'order': order,
         'items': items,
     })
@@ -162,4 +186,3 @@ def sendEmail(userEmail, order, items):
     email.content_subtype = 'html'
     email.send()
     print("Email Sent to ", userEmail)
-    
