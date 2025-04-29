@@ -3,16 +3,18 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.views import generic
 from django.utils import timezone
 from django.views.generic import View, ListView, DetailView
-# Needed for account implementation, not working on yet
-# from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth.models import User
-# from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from .models import Customer, Item, Order, OrderItem
 from .utilities import cartFromCookie
 import json
-import datetime
-from django.core.mail import send_mail
+
+# Email requirements
+from django.core.mail import send_mail, EmailMessage
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def index(request):
     """Renders /templates/TeamIGS/index.html with list of all items sorted by name
@@ -126,6 +128,20 @@ def checkout(request):
     items = cartData['items']
 
     context = {'items':items, 'order':order}
+
+    if request.method == 'POST':
+        userEmail = request.POST.get('email')
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        zipCode = request.POST.get('zipcode')
+        country = request.POST.get('country')
+        if userEmail:
+            sendEmail(userEmail, order, items, name, address, city, state, zipCode, country)
+            return redirect(processOrder)
+
+    
     return render(request, 'TeamIGS/checkout.html', context)
 
 def processOrder(request):
@@ -134,12 +150,39 @@ def processOrder(request):
     Code Date: April 15
     Programmer: Russell de Vries
     """
-    # Potentially set up a process to email the user with information about the order
-    # send_mail(
-    #     "TeamIGS Order",
-    #     "Order Confirmation from TeamIGS" + items,
-    #     "TeamIGS@business.net",
-    #     email,
-    #     fail_silently= False
-    # )
+
+    cartData = cartFromCookie(request)
+    order = cartData['order']
+    items = cartData['items']
+    userEmail = request.POST.get('email')
+    
     return render(request, 'TeamIGS/processOrder.html')
+
+def sendEmail(userEmail, order, items, name, address, city, state, zipCode, country):
+    """Function to send email to user when checkout button is pressed.
+
+    Code Date: April 29
+    Programmer: Russell de Vries
+    """
+    subject = "Order Confirmation From TeamIGS"
+    html_message = render_to_string('TeamIGS/email.html', {
+        'name': name,
+        'address': address,
+        'city': city,
+        'state': state,
+        'zipCode': zipCode,
+        'country': country,
+        'order': order,
+        'items': items,
+    })
+    plain_message = strip_tags(html_message)
+
+    email = EmailMessage(
+        subject = subject,
+        body = html_message,
+        from_email = os.getenv('EMAIL'),
+        to=[userEmail],
+    )
+    email.content_subtype = 'html'
+    email.send()
+    print("Email Sent to ", userEmail)

@@ -106,8 +106,7 @@ class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.SET_NULL, null=True)
     ordered = models.BooleanField(default = False)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-
-
+        
     def __str__(self):
         """Returns how many of an item is in the cart"""
         return f"{self.quantity} of {self.item.name}"
