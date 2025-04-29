@@ -116,5 +116,23 @@ Then, we can create items. This is done by clicking the "+Add" button next to "I
 From here, fill out the fields with the information that you desire. The only section of note is images, which you can upload directly from your computer. They will be stored locally alongside the project files in /static/images/itemImages.\
 These items should automatically appear on the home page of the website as they are added.
 
+Setting up emails takes a little bit of work, but it's not too difficult. Steps 1-4 with pictures can be found here: https://www.geeksforgeeks.org/setup-sending-email-in-django-project/
+
+### Step 1
+Sign into your google account.
+### Step 2 
+Click on your account icon, then click "Manage your Google Account".
+### Step 3
+Click the search button in the top right corner and search for "2-Step Verification". Enable this.
+### Step 4
+Search for "App Passwords". Click the result with that name. Create a name for the project and hit create. You will be given a password.
+### Step 5
+In your .env file, write\
+EMAIL = "YOUR@EMAIL"\
+EMAILPASS = "PASSWORD"
+
+"YOUR@EMAIL" is the email account you used, and "PASSWORD" is the password you got in step 4.
+
+
 Setting up a webserver is up to you. There are several ways to do this, and that is a choice that you, the user, must make. For now, though, you can run things locally while testing. Just make sure to follow Django's advice for what to do before going into production. The checklist can be found below. \
 https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
