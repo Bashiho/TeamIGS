@@ -131,14 +131,8 @@ def checkout(request):
 
     if request.method == 'POST':
         userEmail = request.POST.get('email')
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        city = request.POST.get('city')
-        state = request.POST.get('state')
-        zipCode = request.POST.get('zipcode')
-        country = request.POST.get('country')
         if userEmail:
-            sendEmail(userEmail, order, items, name, address, city, state, zipCode, country)
+            sendEmail(userEmail, order, items, request)
             return redirect(processOrder)
 
     
@@ -158,7 +152,7 @@ def processOrder(request):
     
     return render(request, 'TeamIGS/processOrder.html')
 
-def sendEmail(userEmail, order, items, name, address, city, state, zipCode, country):
+def sendEmail(userEmail, order, items, request):
     """Function to send email to user when checkout button is pressed.
 
     Code Date: April 29
@@ -166,12 +160,12 @@ def sendEmail(userEmail, order, items, name, address, city, state, zipCode, coun
     """
     subject = "Order Confirmation From TeamIGS"
     html_message = render_to_string('TeamIGS/email.html', {
-        'name': name,
-        'address': address,
-        'city': city,
-        'state': state,
-        'zipCode': zipCode,
-        'country': country,
+        'name': request.POST.get('name'),
+        'address': request.POST.get('address'),
+        'city': request.POST.get('city'),
+        'state': request.POST.get('state'),
+        'zipCode': request.POST.get('zipcode'),
+        'country': request.POST.get('country'),
         'order': order,
         'items': items,
     })
