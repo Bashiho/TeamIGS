@@ -46,6 +46,21 @@
 						</div>
 					</div>
 
+
+					<div id="card-info">
+						<hr>
+						<p>Card Information</p>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="card-number" placeholder="Card Number">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="card-holder" placeholder="Card Holder">
+						</div>
+						<div class="form-field">
+							<input required class="form-control" type="text" name="pin" placeholder="Card Pin">
+						</div>
+
+					</div>
 					<hr>
 					<a href="{% url 'processOrder' %}">
 						<input type="submit" value="Confirm"/>
