@@ -33,8 +33,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 ''' Things to do later
-DEFAULT_FROM_EMAIL = 
-SERVER_EMAIL = 
 
 change debug to false
 '''
