@@ -69,12 +69,16 @@ class CustomerTestCase(TestCase):
 class OrderTestCase(TestCase):
     @freeze_time("2025-4-24")
     def setUp(self):
+        image = 'TeamIGS/static/images/cart-icon.png'
         user = User.objects.create_user(username="username", password="password", email="email@gmail.com")
         user2 = User.objects.create_user(username="username2", password="password2", email="email2@gmail.com")
         customer = Customer.objects.create(user=user, name="Bob", email="email@gmail.com")
         customer2 = Customer.objects.create(user=user2, name="Gerald", email="email2@gmail.com")
         Order.objects.create(customer=customer, dateOrdered=datetime.datetime(2025, 4, 24, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=True, transactionId="abcdefghijklmnopqrstuvwxyz")
         Order.objects.create(customer=customer2, dateOrdered=datetime.datetime(2025, 1, 9, 0, 0, 0, tzinfo=datetime.timezone.utc), complete=False, transactionId="123")
+        order = Order.objects.get(customer=customer)
+        Item.objects.create(name="Lamp", description="Simple Lamp", image=image, price=100)
+        OrderItem.objects.create(user=user, quantity=5, item=Item.objects.get(name="Lamp"), ordered=False, order=order)
 
     def testOrderCustomer(self):
         customer = Customer.objects.get(name="Bob")
@@ -102,10 +106,15 @@ class OrderTestCase(TestCase):
         self.assertEqual(order1.transactionId, "abcdefghijklmnopqrstuvwxyz")
         self.assertEqual(order2.transactionId, "123")
 
+    # def testGetCartTotal(self):
+    #     order = Order.objects.get(complete=True)
+    #     orderItem = OrderItem.objects.get(ordered=False)
+    #     self.assertEqual(order.getCartTotal(), OrderItem.getTotalItemPrice())
+
 class OrderItemTestCase(TestCase):
     def setUp(self):
         image = 'TeamIGS/static/images/cart-icon.png'
-        Item.objects.create(name="Lamp", description="Simple Lamp", image=image, price=71322.72)
+        Item.objects.create(name="Lamp", description="Simple Lamp", image=image, price=100)
         lamp = Item.objects.get(name="Lamp")
 
         user = User.objects.create_user(username="username", password="password", email="email@gmail.com")
@@ -138,3 +147,7 @@ class OrderItemTestCase(TestCase):
         order = Order.objects.get(complete=True)
         lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
         self.assertEqual(lamp.order, order)
+
+    def testGetTotalItemPrice(self):
+        lamp = OrderItem.objects.get(item=Item.objects.get(name="Lamp"))
+        self.assertEqual(lamp.getTotalItemPrice(), 500)
