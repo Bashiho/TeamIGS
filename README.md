@@ -73,7 +73,7 @@ source ~/.virtualenvs/venv/bin/activate
 ~\.virtualenvs\djangodev\scripts\activate.bat
 
 # Install Requirements
-pip install -r requirements.txt
+pip install -r Requirements.txt
 # You might get an error, and it might ask you to update pip. To do so, run the command that it prompts you to run. It will look something like this for Windows users.
 python.exe -m pip install --upgrade pip
 
@@ -83,7 +83,7 @@ python.exe -m pip install --upgrade pip
 ## Setup
 This project requires some setup beyond installation.
 ```shell
-# Start by navigating to the dircetory of the project
+# Start by navigating to the dircetory of the project if you aren't already there
 cd TeamIGS
 
 # Then, we need to run some commands

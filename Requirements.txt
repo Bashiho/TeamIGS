@@ -1,5 +1,5 @@
 django
-mod_wsgi
+# mod_wsgi causing erros when installing, removed for now
 python-dotenv
 Pillow
 docutils
