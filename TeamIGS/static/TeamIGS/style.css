@@ -89,10 +89,22 @@ font-size: 50px;
 
 .row-image {
   border: white;
+  background-color: white;
   border-radius: 5px;
   border-style: solid;
   max-height: 250px;
   max-width: 300px;
+  float: left;
+  margin-right: 15px;
+}
+
+.detail-image {
+  border: white;
+  background-color: white;
+  border-radius: 5px;
+  border-style: solid;
+  max-height: 650px;
+  max-width: 800px;
   float: left;
   margin-right: 15px;
 }
