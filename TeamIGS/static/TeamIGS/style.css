@@ -91,7 +91,19 @@ font-size: 50px;
   border: white;
   border-radius: 5px;
   border-style: solid;
-  height: 180px;
+  max-height: 250px;
+  max-width: 300px;
   float: left;
   margin-right: 15px;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
