@@ -4,10 +4,11 @@ li a {
 
 body {
     background: black;
-    background-image: url("../images/Dark Background.jpg");
+    background-image: url("../images/BACKGROUND.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center; /* centers image*/
+    background-attachment: fixed;
     min-height: 100vh; 
     margin: 0; /* avoids gaps */
     color: aliceblue
