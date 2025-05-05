@@ -31,6 +31,8 @@ from . import views
 from django.conf.urls.static import static 
 from django.conf import settings
 
+admin.site.site_header = "TeamIGS"
+
 app_name = "TeamIGS"
 urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')),
