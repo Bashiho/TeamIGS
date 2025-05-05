@@ -37,6 +37,12 @@ python --version
 # Download the latest version if it is not installed
 # https://www.python.org/downloads/
 
+# Clone the repository
+git clone https://github.com/Bashiho/TeamIGS.git
+
+# Navigate to the project's directory
+cd TeamIGS
+
 # Now we are going to make a secret key. This is used for encryption purposes, and should be kept secret.
 # There are two ways to do this
 
@@ -44,7 +50,9 @@ python --version
 # This is the easiest method. Simply visit https://djecrety.ir/ and generate a key.
 
 # Option 2
-# This method takes longer than the first and has no significant benefits over the other.
+# This method takes longer than the first and has no significant benefits
+# Install Django
+pip install django
 # Create a Django project
 # Create a file directory where you want the project to be stored
 mkdir DjangoProject
@@ -57,27 +65,25 @@ $ django-admin startproject projectname djangoproject
 # In this .env file, write the following, and paste your key where it says 'YOUR KEY' 
 # DJANGOSECRET = 'YOUR KEY'
 
-# Clone the repository
-git clone https://github.com/Bashiho/TeamIGS.git
 
-# Navigate to the project's directory
-cd TeamIGS
+# If you are running this in VSCode, you can create a Virtual Environment (venv), from
+# the command pallete
+# Press ctrl + shift + p to open the pallete, then select Python: Create Environment
+# Select the appropriate version of python and install packages from Requirements.txt
 
+# If you cannot do the above, do the following through a terminal
 # Create a Virtual Environment for the project
-python -m venv ~/.virtualenvs/venv
+python -m venv path/to/venv
 
 # Activate the Virtual Environment
 # If you are on Linux or Mac
-source ~/.virtualenvs/venv/bin/activate
+source path/to/venv/bin/activate
 # If you are on Windows
-~\.virtualenvs\djangodev\scripts\activate.bat
+~\path\to\venv\djangodev\scripts\activate.bat
 
 # Install Requirements
 pip install -r Requirements.txt
-# You might get an error, and it might ask you to update pip. To do so, run the command that it prompts you to run. It will look something like this for Windows users.
-python.exe -m pip install --upgrade pip
-
-# Finally, move your .env file into the directory alongside manage.py
+# you might be asked to update pip, if so, then run the command given to do so
 ```
 
 ## Setup
@@ -88,22 +94,27 @@ cd TeamIGS
 
 # Then, we need to run some commands
 
-# Start by making and deploying migrations. This will initialize our database with the parameters given by
-# the models defined in the program
-# Making migrations
-python manage.py makemigrations
+# We'll start by running our server once
+python manage.py runserver
 
-# Deploying the migrations
+# From there, we will get a warning about undeployed migrations
+# Simply run the command provided to migrate
 python manage.py migrate
+
+# If for whatever reason this doesn't work, we can make the migrations
+# again and deploy them 
+python manage.py makemigrations
+python manage.py migrate
+# formatted as: sqlmigrate appName migrationName
 python manage.py sqlmigrate TeamIGS 0001
 
-#Then, create an admin account
+
+# After migrating, create an admin account
 python manage.py createsuperuser
-# You will be prompted for a username, email, and password, simply fill out these bits of information.
+# You will be prompted for a username, email, and password, fill out these fields as you are asked to
 
 # Then, to run the server locally and test that everything is working,
 python manage.py runserver
-
 ```
 
 From here, there will be a url provided in the console. It will look something like this:\
