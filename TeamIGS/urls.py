@@ -25,6 +25,8 @@ from .views import (
     updateItem,
     processOrder,
     sendEmail,
+    stripe_config,
+    create_checkout,
 )
 from . import views
 
@@ -43,5 +45,7 @@ urlpatterns = [
     path("checkout/", checkout, name="checkout"),
     path("updateItem/", updateItem, name="updateItem"),
     path("processOrder/", processOrder, name="processOrder"),
+    path("config/", stripe_config),
+    path("createCheckout/", create_checkout),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

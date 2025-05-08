@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from .models import Customer, Item, Order, OrderItem
 from .utilities import cartFromCookie
 import json
+import stripe
 
 # Email requirements
 from django.core.mail import send_mail, EmailMessage
@@ -180,3 +181,40 @@ def sendEmail(userEmail, order, items, request):
     email.content_subtype = 'html'
     email.send()
     print("Email Sent to ", userEmail)
+
+
+# https://testdriven.io/blog/django-stripe-tutorial/
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPEPUBLIC}
+        return JsonResponse(stripe_config, safe=false)
+
+def create_checkout(request):
+    cartData = cartFromCookie(request)
+    order = cartData['order']
+    items = cartData['items']
+
+    lineItems = []
+    for item in order:
+        lineItems.append[
+            {
+                'name': item.name,
+                'quantity': item.quantity,
+                'currency': 'usd',
+                'amount': item.getTotalItemPrice(),
+            }]
+
+    if request.method == 'GET':
+        domain_url = "http://localhost:8000/"
+        stripe.api_key = settings.STRIPESECRET
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                success_url = domain_url + 'processOrder?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url = domain_url + 'cancelled/',
+                payment_method_types = ['card'],
+                mode = 'payment',
+                line_items = lineItems
+            )
+            return JsonResponse({'sessionID': checkout_session['id']})
+        except Exception as e:
+            return JsonResponse({'error': str(e)})
